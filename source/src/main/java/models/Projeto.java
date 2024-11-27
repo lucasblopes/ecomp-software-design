@@ -1,15 +1,21 @@
 package models;
 
+import java.util.ArrayList;
+
 // Classe Model que representa o Projeto
 public class Projeto {
+    private String titulo;
     private String cliente;
     private String diaInicio;
     private String prazoEntrega;
     private String descricao;
     private String contratoPDF;
+    private ArrayList<Etapa> etapas;
 
     // Construtor
-    public Projeto(String cliente, String diaInicio, String prazoEntrega, String descricao, String contratoPDF) {
+    public Projeto(String titulo, String cliente, String diaInicio, String prazoEntrega, String descricao,
+            String contratoPDF) {
+        this.titulo = titulo;
         this.cliente = cliente;
         this.diaInicio = diaInicio;
         this.prazoEntrega = prazoEntrega;
@@ -18,6 +24,10 @@ public class Projeto {
     }
 
     // Métodos getters e setters
+    public String getTitulo() {
+        return titulo;
+    }
+
     public String getCliente() {
         return cliente;
     }
@@ -28,6 +38,10 @@ public class Projeto {
 
     public String getDiaInicio() {
         return diaInicio;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public void setDiaInicio(String diaInicio) {
@@ -60,7 +74,7 @@ public class Projeto {
 
     // Método de validação dos campos obrigatórios
     public boolean isValid() {
-        return cliente != null && !cliente.isEmpty() &&
+        return titulo != null && !titulo.isEmpty() && cliente != null && !cliente.isEmpty() &&
                 diaInicio != null && !diaInicio.isEmpty() &&
                 prazoEntrega != null && !prazoEntrega.isEmpty() &&
                 descricao != null && !descricao.isEmpty();

@@ -1,0 +1,16 @@
+DEPENDENCIES:
+
+- Java:
+openjdk 17.0.13 2024-10-15
+OpenJDK Runtime Environment (build 17.0.13+11-Ubuntu-2ubuntu124.04)
+OpenJDK 64-Bit Server VM (build 17.0.13+11-Ubuntu-2ubuntu124.04, mixed mode, sharing)
+
+- MVN:
+Apache Maven 3.8.7
+
+----------------
+
+EXEC:
+
+mvn compile
+mvn exec:java

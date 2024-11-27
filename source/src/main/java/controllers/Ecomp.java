@@ -1,26 +1,21 @@
 package controllers;
 
+import models.Projeto;
+import views.CadastrarProjetoView;
+import views.EcompView;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Ecomp {
+
+    private EcompView view;
     private Scanner scanner;
+    private ArrayList<Projeto> projetos;
 
     public Ecomp() {
+        this.view = new EcompView();
         this.scanner = new Scanner(System.in);
-    }
-
-    // Método que exibe o menu principal
-    public void exibirMenu() {
-        System.out.println("=== Sistema Ecomp ===");
-        System.out.println("1 - Cadastrar Projetos");
-        System.out.println("2 - Cadastrar Etapas do Desenvolvimento do Projeto");
-        System.out.println("3 - Adicionar Desenvolvedores ao Projeto");
-        System.out.println("4 - Cadastrar Nova Atividade");
-        System.out.println("5 - Cadastrar Notas Fiscais e Recibos");
-        System.out.println("6 - Cadastrar Membro");
-        System.out.println("7 - Gerar Relatório");
-        System.out.println("0 - Sair");
-        System.out.print("Escolha uma opção (1-7): ");
+        this.projetos = new ArrayList<>();
     }
 
     // Método que processa a escolha do usuário
@@ -28,14 +23,17 @@ public class Ecomp {
         int opcao;
         do {
             // Exibe o menu e lê a opção do usuário
-            exibirMenu();
+            view.limparTela();
+            view.showMenu();
             opcao = scanner.nextInt();
             scanner.nextLine(); // Limpa o buffer
+            view.limparTela();
 
             // Processa a opção selecionada
             switch (opcao) {
                 case 1:
-                    cadastrarProjeto();
+                    CadastrarProjetoCtrl controller = new CadastrarProjetoCtrl(projetos);
+                    controller.cadastrarProjeto();
                     break;
                 case 2:
                     cadastrarEtapas();
@@ -64,38 +62,35 @@ public class Ecomp {
         } while (opcao != 0);
     }
 
-    // Funções de cada caso de uso
-    private void cadastrarProjeto() {
-        System.out.println("Iniciando cadastro de projeto...");
-        // Aqui você chamaria o código referente ao caso de uso "Cadastrar Projeto"
-    }
-
-    private void cadastrarEtapas() {
+    public void cadastrarEtapas() {
         System.out.println("Iniciando cadastro de etapas do projeto...");
         // Aqui você chamaria o código referente ao caso de uso "Cadastrar Etapas"
     }
 
-    private void adicionarDesenvolvedores() {
+    public void adicionarDesenvolvedores() {
         System.out.println("Iniciando cadastro de desenvolvedores ao projeto...");
-        // Aqui você chamaria o código referente ao caso de uso "Adicionar Desenvolvedores"
+        // Aqui você chamaria o código referente ao caso de uso "Adicionar
+        // Desenvolvedores"
     }
 
-    private void cadastrarAtividade() {
+    public void cadastrarAtividade() {
         System.out.println("Iniciando cadastro de atividade...");
-        // Aqui você chamaria o código referente ao caso de uso "Cadastrar Nova Atividade"
+        // Aqui você chamaria o código referente ao caso de uso "Cadastrar Nova
+        // Atividade"
     }
 
-    private void cadastrarNotasFiscais() {
+    public void cadastrarNotasFiscais() {
         System.out.println("Iniciando cadastro de notas fiscais e recibos...");
-        // Aqui você chamaria o código referente ao caso de uso "Cadastrar Notas Fiscais e Recibos"
+        // Aqui você chamaria o código referente ao caso de uso "Cadastrar Notas Fiscais
+        // e Recibos"
     }
 
-    private void cadastrarMembro() {
+    public void cadastrarMembro() {
         System.out.println("Iniciando cadastro de membro...");
         // Aqui você chamaria o código referente ao caso de uso "Cadastrar Membro"
     }
 
-    private void gerarRelatorio() {
+    public void gerarRelatorio() {
         System.out.println("Gerando relatório...");
         // Aqui você chamaria o código referente ao caso de uso "Gerar Relatório"
     }
