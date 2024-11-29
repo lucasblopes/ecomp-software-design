@@ -15,32 +15,46 @@ public class GenericView {
         return scanner.nextLine();
     }
 
+    // Lê o input int do usuário
+    public int getInputInt() {
+        try {
+            return Integer.parseInt(getInput());
+        } catch (NumberFormatException e) {
+            showError("Entrada inválida. Insira um número inteiro.");
+            return getInputInt();
+        }
+    }
+
     // Exibe mensagem de erro
     public void showError(String message) {
         System.out.println();
         System.out.println("Erro: " + message);
+        continuar();
     }
 
     // Exibe mensagem de sucesso
     public void showSuccess(String message) {
         System.out.println();
         System.out.println(message);
+        continuar();
     }
 
     public void confirmar() {
         System.out.println();
         System.out.print("ENTER para confirmar...");
         getInput();
+        limparTela();
     }
 
     public void continuar() {
         System.out.println();
         System.out.print("ENTER para continuar...");
         getInput();
+        limparTela();
     }
 
     // Limpa a tela do terminal
-    public static void limparTela() {
+    public void limparTela() {
         for (int i = 0; i < 50; ++i) {
             System.out.println();
         }

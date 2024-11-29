@@ -8,9 +8,13 @@ public class CadastrarProjetoView extends GenericView {
         super();
     }
 
+    public void showTitulo() {
+        System.out.println("=== Cadastro de Projeto ===");
+    }
+
     // Exibe o menu para cadastrar o projeto
     public void showCadastroProjetoScreen() {
-        System.out.println("=== Cadastro de Projeto ===");
+        showTitulo();
         System.out.println("Titulo: ");
         System.out.println("Cliente: ");
         System.out.println("Data Inicial: ");
@@ -18,10 +22,10 @@ public class CadastrarProjetoView extends GenericView {
         System.out.println("Descricao: ");
         System.out.println("Contrato em PDF: ");
         continuar();
-        getInput();
     }
 
     public String inputTitulo() {
+        showTitulo();
         System.out.print("Titulo: ");
         String titulo = getInput();
         return titulo;
@@ -51,23 +55,21 @@ public class CadastrarProjetoView extends GenericView {
         return descricao;
     }
 
-    public String inputCaminhoContrato() {
-        System.out.print("Caso tenha um contrato, adicione o caminho dele: ");
-        String descricao = getInput();
-        return descricao;
+    public String inputCaminhoContratoPDF() {
+        showTitulo();
+        System.out.print("Caso tenha um contrato PDF, adicione o caminho dele: ");
+        String path = getInput();
+        if (!path.isEmpty()) {
+            showTelaContratoImportado(path);
+        } else {
+            System.out.print("Contrato PDF não anexado!");
+        }
+
+        return path;
     }
 
-    public void mostrarTelaContratoImportado(String caminhoContratoPDF) {
+    public void showTelaContratoImportado(String caminhoContratoPDF) {
         System.out.println("Contrato adicionado: " + PathUtil.getLastPartOfPath(caminhoContratoPDF));
-    }
-
-    // Exibe a tela de upload do contrato
-    public void showUploadContractScreen() {
-        System.out.print("Informe o caminho do arquivo do contrato (PDF) ou deixe em branco caso na ");
-    }
-
-    // Exibe a tela inicial após cadastro
-    public void showInitialScreen() {
-        System.out.println("Cadastro de projeto concluído com sucesso!");
+        continuar();
     }
 }
