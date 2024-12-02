@@ -25,6 +25,20 @@ public class GenericView {
         }
     }
 
+    public void showTitle(String view){
+        switch (view){
+            case "Cadastro de Projetos":
+                System.out.println("=== Cadastro de Projeto ===");
+                break;
+            case "Cadastro de Etapas do Projeto":
+                System.out.println("=== Cadastro de Etapas do Projeto ===");
+                break;
+            //Criar os outros
+            default:
+                break;
+        }
+    }
+
     // Exibe mensagem de erro
     public void showError(String message) {
         System.out.println();

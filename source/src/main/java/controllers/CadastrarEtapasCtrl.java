@@ -1,14 +1,28 @@
 package controllers;
 
-import models.Projeto;
+import java.util.Optional;
+import models.*;
+import repositories.ProjetoRepository;
 import views.CadastrarEtapasView;
-import java.util.ArrayList;
 
 public class CadastrarEtapasCtrl {
+    private CadastrarEtapasView view;
 
-    public CadastrarEtapasCtrl() {
-    }
+    public CadastrarEtapasCtrl() { this.view = new CadastrarEtapasView(); }
 
-    public void cadastrarEtapa() {
+    public void cadastrarEtapa(ProjetoRepository projetos) {
+
+        view.showCadastroEtapaScreen(projetos);
+
+        String selectedProject = view.selecionaProjeto();
+
+        Optional<Projeto> foundProj = projetos.buscarProjeto(selectedProject);
+        if(foundProj.isPresent())
+            foundProj.get().printaProjeto();
+        else
+           view.showError("Projeto não encontrado.");
+
+
+
     }
 }

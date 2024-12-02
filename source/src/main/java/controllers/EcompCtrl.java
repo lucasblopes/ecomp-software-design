@@ -29,7 +29,7 @@ public class EcompCtrl {
                     new CadastrarProjetoCtrl().cadastrarProjeto(projetos);
                     break;
                 case 2:
-                    new CadastrarEtapasCtrl().cadastrarEtapa();
+                    new CadastrarEtapasCtrl().cadastrarEtapa(projetos);
                     break;
                 case 3:
                     new AdicionarDevsCtrl().adicionarDevs();

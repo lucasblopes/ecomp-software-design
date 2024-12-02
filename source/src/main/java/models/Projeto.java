@@ -114,4 +114,24 @@ public class Projeto {
                 prazoEntrega != null && !prazoEntrega.isEmpty() &&
                 descricao != null && !descricao.isEmpty();
     }
+
+    // Método para mostrar o projeto
+    public void printaProjeto() {
+        System.out.println("Título: " + this.titulo);
+        System.out.println("Cliente: " + this.cliente);
+        System.out.println("Data de Início: " + this.dataInicio);
+        System.out.println("Prazo de Entrega: " + this.prazoEntrega);
+        System.out.println("Descrição: " + this.descricao);
+
+        if(this.contratoPDF == null)
+            System.out.println("Contrato não anexado");
+        else
+            System.out.println("Contrato: " + this.contratoPDF);
+
+        System.out.println("Etapas:");
+        System.out.println("    Cronograma: " + " Status do Projeto: ");
+        for(Etapa etp : this.etapas) {
+            System.out.println("    Cronograma " + etp.getCronograma() + " Status do Projeto: " + etp.getStatus());
+        }
+    }
 }
