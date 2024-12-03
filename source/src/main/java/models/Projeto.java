@@ -1,118 +1,90 @@
 package models;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
-// Class Model Projeto
 public class Projeto {
     private String titulo;
     private String cliente;
-    private String dataInicio;
-    private String prazoEntrega;
+    private LocalDate dataInicio;
+    private LocalDate prazoEntrega;
     private String descricao;
     private String contratoPDF;
-    private ArrayList<Etapa> etapas;
+    private List<Etapa> etapas;
 
-    // Construtor padrao
-    public Projeto() {
-
+    // Construtor protected para que apenas ProjetoBuilder possa instanciar
+    protected Projeto(String titulo, String cliente, LocalDate dataInicio, LocalDate prazoEntrega,
+            String descricao, String contratoPDF, List<Etapa> etapas) {
+        this.titulo = titulo;
+        this.cliente = cliente;
+        this.dataInicio = dataInicio;
+        this.prazoEntrega = prazoEntrega;
+        this.descricao = descricao;
+        this.contratoPDF = contratoPDF;
+        this.etapas = etapas == null ? new ArrayList<>() : etapas; // Evita null
     }
 
-    // Construtor sem contratoPDF
-    public Projeto(String titulo, String cliente, String dataInicio, String prazoEntrega, String descricao) {
-        this(titulo, cliente, dataInicio, prazoEntrega, descricao, null, new ArrayList<>());
-    }
-
-    // Construtor sem etapas
-    public Projeto(String titulo, String cliente, String dataInicio, String prazoEntrega, String descricao,
-            String contratoPDF) {
-        this(titulo, cliente, dataInicio, prazoEntrega, descricao, contratoPDF, new ArrayList<>());
-    }
-
-    // Construtor com etapas
-    public Projeto(String titulo, String cliente, String dataInicio, String prazoEntrega, String descricao,
-            String contratoPDF, ArrayList<Etapa> etapas) {
-        setTitulo(titulo);
-        setCliente(cliente);
-        setDataInicio(dataInicio);
-        setPrazoEntrega(prazoEntrega);
-        setDescricao(descricao);
-        setContratoPDF(contratoPDF);
-        setEtapas(etapas);
-    }
-
+    // Getters (sem setters para garantir imutabilidade)
     public String getTitulo() {
         return titulo;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    // getters / setters
     public String getCliente() {
         return cliente;
     }
 
-    public void setCliente(String cliente) {
-        this.cliente = cliente;
-    }
-
-    public String getDataInicio() {
+    public LocalDate getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(String dataInicio) {
-        this.dataInicio = dataInicio;
-    }
-
-    public String getPrazoEntrega() {
+    public LocalDate getPrazoEntrega() {
         return prazoEntrega;
-    }
-
-    public void setPrazoEntrega(String prazoEntrega) {
-        this.prazoEntrega = prazoEntrega;
     }
 
     public String getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
     public String getContratoPDF() {
         return contratoPDF;
     }
 
-    public void setContratoPDF(String contratoPDF) {
-        this.contratoPDF = contratoPDF;
-    }
-
-    public ArrayList<Etapa> getEtapas() {
+    public List<Etapa> getEtapas() {
         return etapas;
     }
 
-    public void setEtapas(ArrayList<Etapa> etapas) {
-        this.etapas = etapas;
-    }
-
-    // Adiciona Etapa à Lista de Etapas
+    // Adiciona Etapa ao projeto
     public void addEtapa(Etapa etapa) {
+        if (this.etapas == null) {
+            this.etapas = new ArrayList<>();
+        }
         this.etapas.add(etapa);
     }
 
-    // Remove Etapa da Lista de Etapas
-    public void removeEtapa(Etapa etapa) {
-        this.etapas.remove(etapa);
-    }
+    // Método de validação dos campos com feedback detalhado
+    public List<String> validarCampos() {
+        List<String> erros = new ArrayList<>();
 
-    // Método de validação dos campos obrigatórios
-    public boolean ehValido() {
-        return titulo != null && !titulo.isEmpty() && cliente != null && !cliente.isEmpty() &&
-                dataInicio != null && !dataInicio.isEmpty() &&
-                prazoEntrega != null && !prazoEntrega.isEmpty() &&
-                descricao != null && !descricao.isEmpty();
+        if (titulo == null || titulo.isEmpty()) {
+            erros.add("Título não pode ser vazio.");
+        }
+        if (cliente == null || cliente.isEmpty()) {
+            erros.add("Cliente não pode ser vazio.");
+        }
+        if (dataInicio == null) {
+            erros.add("Data de Início não pode ser vazia.");
+        }
+        if (prazoEntrega == null) {
+            erros.add("Prazo de Entrega não pode ser vazio.");
+        } else if (prazoEntrega.isBefore(dataInicio)) {
+            erros.add("O prazo de entrega deve ser maior que a data de início.");
+        }
+        if (descricao == null || descricao.isEmpty()) {
+            erros.add("Descrição não pode ser vazia.");
+        }
+
+        return erros;
     }
 
     // Método para mostrar o projeto
@@ -123,15 +95,19 @@ public class Projeto {
         System.out.println("Prazo de Entrega: " + this.prazoEntrega);
         System.out.println("Descrição: " + this.descricao);
 
-        if(this.contratoPDF == null)
+        if (this.contratoPDF == null)
             System.out.println("Contrato não anexado");
         else
             System.out.println("Contrato: " + this.contratoPDF);
 
         System.out.println("Etapas:");
-        System.out.println("    Cronograma: " + " Status do Projeto: ");
-        for(Etapa etp : this.etapas) {
+        for (Etapa etp : this.etapas) {
             System.out.println("    Cronograma " + etp.getCronograma() + " Status do Projeto: " + etp.getStatus());
         }
+    }
+
+    // Método para acessar o construtor através do ProjetoBuilder
+    public static ProjetoBuilder builder() {
+        return new ProjetoBuilder();
     }
 }

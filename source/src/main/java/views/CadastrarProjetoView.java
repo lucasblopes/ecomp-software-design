@@ -1,6 +1,8 @@
 package views;
 
+import java.time.LocalDate;
 import utils.PathUtil;
+import utils.DateUtil;
 
 public class CadastrarProjetoView extends GenericView {
 
@@ -24,30 +26,65 @@ public class CadastrarProjetoView extends GenericView {
         showTitle("Cadastro de Projetos");
         System.out.print("Titulo: ");
         String titulo = getInput();
+        while (titulo == null || titulo.isEmpty()) {
+            showError("Título não pode ser vazio.");
+            System.out.print("Titulo: ");
+            titulo = getInput();
+        }
         return titulo;
     }
 
     public String inputCliente() {
         System.out.print("Cliente: ");
         String cliente = getInput();
+        while (cliente == null || cliente.isEmpty()) {
+            showError("Cliente não pode ser vazio.");
+            System.out.print("Cliente: ");
+            cliente = getInput();
+        }
         return cliente;
     }
 
-    public String inputDataInicial() {
-        System.out.print("Data Inicial: ");
+    public LocalDate inputDataInicial() {
+        System.out.print("Data Inicial (dd/MM/yyyy): ");
         String data = getInput();
-        return data;
+        LocalDate dataInicial = null;
+        while (dataInicial == null) {
+            try {
+                dataInicial = DateUtil.parseDate(data);
+            } catch (IllegalArgumentException e) {
+                showError(e.getMessage());
+                System.out.print("Data Inicial (dd/MM/yyyy): ");
+                data = getInput();
+            }
+        }
+        return dataInicial;
     }
 
-    public String inputPrazoEntrega() {
-        System.out.print("Prazo de entrega: ");
+    public LocalDate inputPrazoEntrega() {
+        System.out.print("Prazo de entrega (dd/MM/yyyy): ");
         String prazo = getInput();
-        return prazo;
+        LocalDate prazoEntrega = null;
+        while (prazoEntrega == null) {
+            try {
+                prazoEntrega = DateUtil.parseDate(prazo);
+            } catch (IllegalArgumentException e) {
+                showError(e.getMessage());
+                System.out.print("Prazo de entrega (dd/MM/yyyy): ");
+                prazo = getInput();
+            }
+        }
+        return prazoEntrega;
     }
 
     public String inputDescricao() {
         System.out.print("Descricao: ");
         String descricao = getInput();
+        while (descricao == null || descricao.isEmpty()) {
+            showError("Descrição não pode ser vazia.");
+            System.out.print("Descricao: ");
+            descricao = getInput();
+        }
         return descricao;
     }
 
@@ -60,7 +97,6 @@ public class CadastrarProjetoView extends GenericView {
         } else {
             showError("Contrato PDF não anexado!");
         }
-
         return path;
     }
 

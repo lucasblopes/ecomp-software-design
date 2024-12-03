@@ -3,6 +3,7 @@ package controllers;
 import repositories.ProjetoRepository;
 import views.EcompView;
 
+// Facade Pattern
 public class EcompCtrl {
 
     private EcompView view;

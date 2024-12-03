@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+// Data Access Object Pattern
 public class ProjetoRepository {
     private List<Projeto> projetos;
 

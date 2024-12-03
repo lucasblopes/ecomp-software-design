@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Projeto;
+import java.time.LocalDate;
 import repositories.ProjetoRepository;
 import views.CadastrarProjetoView;
 
@@ -16,6 +17,7 @@ public class CadastrarProjetoCtrl {
         // Exibe a tela de cadastro de projeto
         view.showCadastroProjetoScreen();
 
+        // Coletar titulo do projeto (serve como identificador)
         String titulo = view.inputTitulo();
 
         // Verifica se já existe um projeto com o título fornecido
@@ -27,23 +29,28 @@ public class CadastrarProjetoCtrl {
 
         // Coletar dados do projeto
         String cliente = view.inputCliente();
-        String dataInicio = view.inputDataInicial();
-        String prazoEntrega = view.inputPrazoEntrega();
+        LocalDate dataInicio = view.inputDataInicial();
+        LocalDate prazoEntrega = view.inputPrazoEntrega();
         String descricao = view.inputDescricao();
 
         view.confirmar();
 
-        // Valida os dados
-        Projeto projeto = new Projeto(titulo, cliente, dataInicio, prazoEntrega, descricao);
-        if (!projeto.ehValido()) {
-            view.showError("Todos os campos devem ser preenchidos.");
-            return;
-        }
-
         // Exibe a tela de upload do contrato PDF
         String contratoPDF = view.inputCaminhoContratoPDF();
-        if (!contratoPDF.isEmpty()) {
-            projeto.setContratoPDF(contratoPDF);
+
+        // Criação do Projeto usando Builder Pattern
+        Projeto projeto = Projeto.builder()
+                .titulo(titulo)
+                .cliente(cliente)
+                .dataInicio(dataInicio)
+                .prazoEntrega(prazoEntrega)
+                .descricao(descricao)
+                .contratoPDF(contratoPDF)
+                .build();
+
+        if (projeto == null) {
+            view.showError("Projeto " + titulo + " não foi cadastrado!");
+            return;
         }
 
         // Adiciona o projeto à lista
