@@ -22,7 +22,7 @@ public class CadastrarEtapasView extends GenericView {
     }
 
     public void showCadastroEtapaScreen(ProjetoRepository projetos) {
-        showTitle("Cadastro de Etapas do Projeto");
+		this.showTitle();
         System.out.println("Selecione o nome do projeto desejado:");
         showProjetos(projetos);
     }
@@ -33,4 +33,8 @@ public class CadastrarEtapasView extends GenericView {
         return selectedProject;
     }
 
+	@Override
+	public void showTitle() {
+		System.out.println("=== Cadastro de Etapas do Projeto ===");
+	}
 }

@@ -12,7 +12,7 @@ public class CadastrarProjetoView extends GenericView {
 
     // Exibe o menu para cadastrar o projeto
     public void showCadastroProjetoScreen() {
-        showTitle("Cadastro de Projetos");
+		this.showTitle();
         System.out.println("Titulo: ");
         System.out.println("Cliente: ");
         System.out.println("Data Inicial: ");
@@ -23,7 +23,7 @@ public class CadastrarProjetoView extends GenericView {
     }
 
     public String inputTitulo() {
-        showTitle("Cadastro de Projetos");
+        this.showTitle();
         System.out.print("Titulo: ");
         String titulo = getInput();
         while (titulo == null || titulo.isEmpty()) {
@@ -89,7 +89,7 @@ public class CadastrarProjetoView extends GenericView {
     }
 
     public String inputCaminhoContratoPDF() {
-        showTitle("Cadastro de Projetos");
+		this.showTitle();
         System.out.print("Caso tenha um contrato PDF, adicione o caminho dele: ");
         String path = getInput();
         if (!path.isEmpty()) {
@@ -104,4 +104,9 @@ public class CadastrarProjetoView extends GenericView {
         System.out.println("Contrato adicionado: " + PathUtil.getLastPartOfPath(caminhoContratoPDF));
         continuar();
     }
+
+	@Override
+	public void showTitle() {
+		System.out.println("=== Cadastro de Projeto ===");
+	}
 }
