@@ -12,7 +12,7 @@ public class RegisterActivityView extends GenericView {
 
     @Override
     public void showTitle() {
-        System.out.println("=== Cadaster Nova Atividade ===");
+        System.out.println("=== Cadastrar Nova Atividade ===");
     }
 
 	public int getDurationMinutes() {
