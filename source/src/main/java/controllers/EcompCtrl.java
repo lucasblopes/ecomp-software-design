@@ -19,10 +19,10 @@ public class EcompCtrl {
         int opcao;
         do {
             // Exibe o menu e lê a opção do usuário via view
-            view.limparTela();
+            view.clearScreen();
             view.showMenu();
             opcao = view.getInputInt();
-            view.limparTela();
+            view.clearScreen();
 
             // Processa a opção selecionada
             switch (opcao) {
@@ -36,7 +36,7 @@ public class EcompCtrl {
                     new AdicionarDevsCtrl().adicionarDevs();
                     break;
                 case 4:
-                    new CadastrarAtividadeCtrl().cadastrarAtividade();
+					new RegisterActivityCtrl().registerActivity();
                     break;
                 case 5:
                     new CadastrarNotasFiscaisCtrl().cadastrarNotasFiscais();
