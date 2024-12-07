@@ -31,35 +31,33 @@ public abstract class GenericView {
     public void showError(String message) {
         System.out.println();
         System.out.println("Erro: " + message);
-        continuar();
+        continueDialog();
     }
 
     // Exibe mensagem de sucesso
     public void showSuccess(String message) {
         System.out.println();
         System.out.println(message);
-        continuar();
+        continueDialog();
     }
 
-    public void confirmar() {
+    public void confirmDialog() {
         System.out.println();
         System.out.print("ENTER para confirmar...");
         getInput();
-        limparTela();
+        clearScreen();
     }
 
-    public void continuar() {
+    public void continueDialog() {
         System.out.println();
         System.out.print("ENTER para continuar...");
         getInput();
-        limparTela();
+        clearScreen();
     }
 
     // Limpa a tela do terminal
-    public void limparTela() {
-        for (int i = 0; i < 50; ++i) {
-            System.out.println();
-        }
+    public void clearScreen() {
+		System.out.print("\033[H\033[2J");
+		System.out.flush(); // Garante que a limpeza ocorre imediatamente
     }
-
 }
