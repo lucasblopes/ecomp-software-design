@@ -19,7 +19,7 @@ public class RegisterProjectView extends GenericView {
 		System.out.println("Prazo entrega: ");
 		System.out.println("Descricao: ");
 		System.out.println("Contrato em PDF: ");
-		continuar();
+		showContinue();
 	}
 
 	public String getTitle() {
@@ -102,7 +102,7 @@ public class RegisterProjectView extends GenericView {
 
 	public void showImportedContractScreen(String contractPDFPath) {
 		System.out.println("Contrato adicionado: " + PathUtil.getLastPartOfPath(contractPDFPath));
-		continuar();
+		showContinue();
 	}
 
 	public void showTitle() {

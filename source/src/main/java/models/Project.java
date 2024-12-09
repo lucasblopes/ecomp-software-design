@@ -63,7 +63,7 @@ public class Project {
     }
 
     // Método de validação dos campos com feedback detalhado
-    public List<String> validarCampos() {
+    public List<String> validateFields() {
         List<String> erros = new ArrayList<>();
 
         if (title == null || title.isEmpty()) {

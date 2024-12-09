@@ -1,6 +1,6 @@
 package repositories;
 
-import models.Membro;
+import models.Member;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +14,7 @@ public class MemberRepository {
 		this.members = new ArrayList<>();
 	}
 
-	public List<Membro> getMembers() {
+	public List<Member> getMembers() {
 		return members;
 	}
 
@@ -22,17 +22,17 @@ public class MemberRepository {
 		this.members = members;
 	}
 
-	public void addMember(Membro member) {
+	public void addMember(Member member) {
 		members.add(member);
 	}
 
-	public void removeMember(Membro member) {
+	public void removeMember(Member member) {
 		members.remove(member);
 	}
 
-	public Optional<Membro> findMember(String name) {
+	public Optional<Member> findMember(String name) {
 		return members.stream()
-			.filter(p -> p.getNome().equalsIgnoreCase(name))
+			.filter(p -> p.getName().equalsIgnoreCase(name))
 			.findFirst();
 	}
 }

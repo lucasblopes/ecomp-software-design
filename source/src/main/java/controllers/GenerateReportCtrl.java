@@ -1,14 +1,14 @@
 package controllers;
 
-import models.Projeto;
-import views.GerarRelatorioView;
+import models.Project;
+import views.GenerateReportView;
 import java.util.ArrayList;
 
-public class GerarRelatorioCtrl {
+public class GenerateReportCtrl {
 
-    public GerarRelatorioCtrl() {
+    public GenerateReportCtrl() {
     }
 
-    public void gerarRelatorio() {
+    public void generateReport() {
     }
 }

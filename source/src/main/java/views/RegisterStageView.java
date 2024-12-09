@@ -1,7 +1,7 @@
 package views;
 
-import models.Projeto;
-import repositories.ProjetoRepository;
+import models.Project;
+import repositories.ProjectRepository;
 import java.util.List;
 
 public class RegisterStageView extends GenericView {
@@ -10,21 +10,21 @@ public class RegisterStageView extends GenericView {
 		super();
 	}
 
-	public void showProjects(ProjectRepository repo) {
-		if (repo.getProjetos().isEmpty()) {
+	public void showProjects(ProjectRepository projectRepo) {
+		if (projectRepo.getProjects().isEmpty()) {
 			showError("Nenhum projeto cadastrado ainda");
 			return;
 		}
 
-		for (Project project : repo.getProjects()) {
+		for (Project project : projectRepo.getProjects()) {
 			System.out.println("- " + project.getTitle());
 		}
 	}
 
-	public void showCadastroEtapaScreen(ProjetoRepository repo) {
+	public void showRegisterStageScreen(ProjectRepository projectRepo) {
 		showTitle();
 		System.out.println("Selecione o nome do projeto desejado:");
-		showProjects(repo);
+		showProjects(projectRepo);
 	}
 
 	public String selectProject() {

@@ -7,7 +7,7 @@ public class EcompView extends GenericView {
     }
 
     public void showMenu() {
-		this.showTitle();
+		System.out.println("=== Sistema Ecomp ===");
         System.out.println("1 - Cadastrar Projetos");
         System.out.println("2 - Cadastrar Etapas do Desenvolvimento do Projeto");
         System.out.println("3 - Adicionar Desenvolvedores ao Projeto");
@@ -18,10 +18,5 @@ public class EcompView extends GenericView {
         System.out.println("0 - Sair");
         System.out.print("Escolha uma opção (1-7): ");
     }
-
-	@Override
-	public void showTitle() {
-		System.out.println("=== Sistema Ecomp ===");
-	}
 }
 

@@ -20,7 +20,7 @@ public class RegisterMemberView extends GenericView {
 		System.out.println("Diretoria: ");
 		System.out.println("Curso: ");
 		System.out.println("Data de Nascimento: ");
-		continuar();
+		showContinue();
 	}
 
 	public String getName() {
@@ -34,7 +34,7 @@ public class RegisterMemberView extends GenericView {
 		return name;
 	}
 
-	public String getCpf() {
+	public String getCPF() {
 		System.out.print("CPF (somente números): ");
 		String cpf = getInput();
 		while (cpf == null || cpf.isEmpty() || !cpf.matches("\\d{11}")) {
@@ -45,7 +45,7 @@ public class RegisterMemberView extends GenericView {
 		return cpf;
 	}
 
-	public String getRg() {
+	public String getRG() {
 		System.out.print("RG: ");
 		String rg = getInput();
 		while (rg == null || rg.isEmpty()) {

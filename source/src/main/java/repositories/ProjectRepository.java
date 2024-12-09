@@ -1,6 +1,6 @@
 package repositories;
 
-import models.Projeto;
+import models.Project;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,17 +22,17 @@ public class ProjectRepository {
         this.projects = projects;
     }
 
-    public void addProject(Projeto project) {
+    public void addProject(Project project) {
         projects.add(project);
     }
 
-    public void removeProject(Projeto project) {
+    public void removeProject(Project project) {
         projects.remove(project);
     }
 
     public Optional<Project> findProject(String title) {
         return projects.stream()
-                .filter(p -> p.getTitulo().equalsIgnoreCase(title))
+                .filter(p -> p.getTitle().equalsIgnoreCase(title))
                 .findFirst();
     }
 }

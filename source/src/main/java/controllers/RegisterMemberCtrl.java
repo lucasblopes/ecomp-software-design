@@ -1,65 +1,67 @@
 package controllers;
 
-import models.Membro;
-import repositories.MembroRepository;
-import views.CadastrarMembroView;
+import models.Member;
+import repositories.MemberRepository;
+import views.RegisterMemberView;
 
 import java.time.LocalDate;
 
-public class CadastrarMembroCtrl {
-	private CadastrarMembroView view;
+public class RegisterMemberCtrl {
+    private RegisterMemberView view;
 
-	public CadastrarMembroCtrl() {
-		this.view = new CadastrarMembroView();
-	}
+    public RegisterMemberCtrl() {
+        this.view = new RegisterMemberView();
+    }
 
-	public void cadastrarMembro(MembroRepository membros) {
-		// Exibe a tela de cadastro de membro
-		view.showCadastroMembroScreen();
+    public void registerMember(MemberRepository memberRepo) {
+        // Exibe a tela de cadastro de membro
+        view.showMemberRegistrationScreen();
 
-		// Coletar titulo do membro (serve como identificador)
-		String cpf = view.inputCpf();
+        view.showTitle();
 
-		// Verifica se já existe um membro com o título fornecido
-		if (membros.buscarMembro(cpf).isPresent()) {
-			view.showError(
-					"Já existe um membro com esse cpf '" + cpf + "'. Tente novamente com um cpf diferente.");
-			return;
-		}
+        // Coletar o CPF do membro (serve como identificador)
+        String cpf = view.getCPF();
 
-		// Coletar dados do membro
-		String nome = view.inputNome();
-		String rg = view.inputRg();
-		String email = view.inputEmail();
-		String telefone = view.inputTelefone();
-		String cargo = view.inputCargo();
-		String diretoria = view.inputDiretoria();
-		String curso = view.inputCurso();
-		LocalDate dataNascimento = view.inputDataNascimento();
+        // Verifica se já existe um membro com o CPF fornecido
+        if (memberRepo.findMember(cpf).isPresent()) {
+            view.showError("Já existe um membro com esse CPF '" + cpf + "'. Tente novamente com um CPF diferente.");
+            return;
+        }
 
-		view.confirmar();
+        // Coletar dados do membro
+        String name = view.getName();
+        String rg = view.getRG();
+        String email = view.getEmail();
+        String phone = view.getPhone();
+        String position = view.getPosition();
+        String department = view.getDepartment();
+        String course = view.getCourse();
+        LocalDate birthDate = view.getBirthDate();
 
-		// Criação do Membro usando Builder Pattern
-		Membro membro = Membro.builder()
-			.nome(nome)
-			.cpf(cpf)
-			.rg(rg)
-			.email(email)
-			.telefone(telefone)
-			.cargo(cargo)
-			.diretoria(diretoria)
-			.curso(curso)
-			.dataNascimento(dataNascimento)
-			.build();
+        view.showConfirmation();
 
-		if (membro == null) {
-			view.showError("Membro " + nome + " não foi cadastrado!");
-			return;
-		}
+        // Criação do Membro usando o Builder Pattern
+        Member member = Member.builder()
+            .name(name)
+            .cpf(cpf)
+            .rg(rg)
+            .email(email)
+            .phone(phone)
+            .position(position)
+            .department(department)
+            .course(course)
+            .birthDate(birthDate)
+            .build();
 
-		// Adiciona o membro à lista
-		membros.adicionarMembro(membro);
+        if (member == null) {
+            view.showError("Membro " + name + " não foi cadastrado!");
+            return;
+        }
 
-		view.showSuccess("Membro " + membro.getNome() + " cadastrado com sucesso!");
-	}
+        // Adiciona o membro à lista
+        memberRepo.addMember(member);
+
+        view.showSuccess("Membro " + member.getName() + " cadastrado com sucesso!");
+    }
 }
+

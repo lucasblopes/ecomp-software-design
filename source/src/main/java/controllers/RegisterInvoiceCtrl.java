@@ -1,14 +1,14 @@
 package controllers;
 
-import models.Projeto;
-import views.CadastrarNotasFiscaisView;
+import models.Project;
+import views.RegisterInvoiceView;
 import java.util.ArrayList;
 
-public class CadastrarNotasFiscaisCtrl {
+public class RegisterInvoiceCtrl {
 
-    public CadastrarNotasFiscaisCtrl() {
+    public RegisterInvoiceCtrl () {
     }
 
-    public void cadastrarNotasFiscais() {
+    public void registerInvoice() {
     }
 }

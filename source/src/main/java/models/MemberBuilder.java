@@ -10,7 +10,7 @@ public class MemberBuilder {
 	private String email;
 	private String phone;
 	private String position;
-	private String board;
+	private String department;
 	private String course;
 	private LocalDate birthDate;
 
@@ -55,8 +55,8 @@ public class MemberBuilder {
 	}
 
 	// Define a diretoria do membro
-	public MemberBuilder board(String board) {
-		this.board = board;
+	public MemberBuilder department(String department) {
+		this.department = department;
 		return this;
 	}
 
@@ -74,7 +74,7 @@ public class MemberBuilder {
 
 	// Método para construir o objeto Member
 	public Member build() {
-		Member member = new Member(name, cpf, rg, email, phone, position, board, course, birthDate);
+		Member member = new Member(name, cpf, rg, email, phone, position, department, course, birthDate);
 
 		// Valida os campos do membro
 		List<String> errors = member.validateFields();

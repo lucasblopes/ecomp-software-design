@@ -11,20 +11,20 @@ public class Member {
     private String email;
     private String phone;
     private String position;
-    private String directorate;
+    private String department;
     private String course;
     private LocalDate birthDate;
 
     // Construtor protegido para instanciar apenas via builder
     protected Member(String name, String cpf, String rg, String email, String phone, String position, 
-                     String directorate, String course, LocalDate birthDate) {
+                     String department, String course, LocalDate birthDate) {
         this.name = name;
         this.cpf = cpf;
         this.rg = rg;
         this.email = email;
         this.phone = phone;
         this.position = position;
-        this.directorate = directorate;
+        this.department = department;
         this.course = course;
         this.birthDate = birthDate;
     }
@@ -54,8 +54,8 @@ public class Member {
         return position;
     }
 
-    public String getDirectorate() {
-        return directorate;
+    public String getDepartment() {
+        return department;
     }
 
     public String getCourse() {
@@ -88,7 +88,7 @@ public class Member {
         if (position == null || position.isEmpty()) {
             errors.add("Cargo não pode ser vazio.");
         }
-        if (directorate == null || directorate.isEmpty()) {
+        if (department == null || department.isEmpty()) {
             errors.add("Diretoria não pode ser vazia.");
         }
         if (course == null || course.isEmpty()) {
@@ -109,7 +109,7 @@ public class Member {
         System.out.println("Email: " + this.email);
         System.out.println("Telefone: " + this.phone);
         System.out.println("Cargo: " + this.position);
-        System.out.println("Diretoria: " + this.directorate);
+        System.out.println("Diretoria: " + this.department);
         System.out.println("Curso: " + this.course);
         System.out.println("Data de Nascimento: " + this.birthDate);
     }

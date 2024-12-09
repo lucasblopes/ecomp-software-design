@@ -1,14 +1,14 @@
 package controllers;
 
-import models.Projeto;
-import views.AdicionarDevsView;
+import models.Project;
+import views.AddDevsView;
 import java.util.ArrayList;
 
-public class AdicionarDevsCtrl {
+public class AddDevsCtrl {
 
-    public AdicionarDevsCtrl() {
+    public AddDevsCtrl() {
     }
 
-    public void adicionarDevs() {
+    public void addDevs() {
     }
 }

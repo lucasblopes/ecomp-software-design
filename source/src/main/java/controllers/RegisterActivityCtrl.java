@@ -1,14 +1,14 @@
 package controllers;
 
-import models.Projeto;
-import views.CadastrarAtividadeView;
+import models.Project;
+import views.RegisterActivityView;
 import java.util.ArrayList;
 
-public class CadastrarAtividadeCtrl {
+public class RegisterActivityCtrl {
 
-    public CadastrarAtividadeCtrl() {
+    public RegisterActivityCtrl() {
     }
 
-    public void cadastrarAtividade() {
+    public void registerActivity() {
     }
 }

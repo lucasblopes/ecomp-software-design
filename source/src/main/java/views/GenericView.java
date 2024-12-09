@@ -29,17 +29,17 @@ public class GenericView {
     public void showError(String message) {
         System.out.println();
         System.out.println("Erro: " + message);
-        continuar();
+        showContinue();
     }
 
     // Exibe mensagem de sucesso
     public void showSuccess(String message) {
         System.out.println();
         System.out.println(message);
-        continuar();
+        showContinue();
     }
 
-    public void showConfirm() {
+    public void showConfirmation() {
         System.out.println();
         System.out.print("ENTER para confirmar...");
         getInput();

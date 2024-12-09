@@ -1,54 +1,51 @@
 package controllers;
 
-import repositories.MembroRepository;
-import repositories.ProjetoRepository;
+import repositories.MemberRepository;
+import repositories.ProjectRepository;
 import views.EcompView;
 
 // Facade Pattern
 public class EcompCtrl {
 
 	private EcompView view;
-	private ProjetoRepository projetos;
-	private MembroRepository membros;
+	private ProjectRepository projectRepo;
+	private MemberRepository memberRepo;
 
 	public EcompCtrl() {
 		this.view = new EcompView();
-		this.projetos = new ProjetoRepository();
-		this.membros = new MembroRepository();
+		this.projectRepo = new ProjectRepository();
+		this.memberRepo = new MemberRepository();
 	}
 
-	// Método que processa a escolha do usuário
-	public void iniciar() {
-		int opcao;
+	public void start() {
+		int option;
 		do {
-			// Exibe o menu e lê a opção do usuário via view
-			view.limparTela();
+			view.clearScreen();
 			view.showMenu();
-			opcao = view.getInputInt();
-			view.limparTela();
+			option = view.getInputInt();
+			view.clearScreen();
 
-			// Processa a opção selecionada
-			switch (opcao) {
+			switch (option) {
 				case 1:
-					new CadastrarProjetoCtrl().cadastrarProjeto(projetos);
+					new RegisterProjectCtrl().registerProject(projectRepo);
 					break;
 				case 2:
-					new CadastrarEtapasCtrl().cadastrarEtapa(projetos);
+					new RegisterStageCtrl().registerStage(projectRepo);
 					break;
 				case 3:
-					new AdicionarDevsCtrl().adicionarDevs();
+					new AddDevsCtrl().addDevs();
 					break;
 				case 4:
-					new CadastrarAtividadeCtrl().cadastrarAtividade();
+					new RegisterActivityCtrl().registerActivity();
 					break;
 				case 5:
-					new CadastrarNotasFiscaisCtrl().cadastrarNotasFiscais();
+					new RegisterInvoiceCtrl().registerInvoice();
 					break;
 				case 6:
-					new CadastrarMembroCtrl().cadastrarMembro(membros);
+					new RegisterMemberCtrl().registerMember(memberRepo);
 					break;
 				case 7:
-					new GerarRelatorioCtrl().gerarRelatorio();
+					new GenerateReportCtrl().generateReport();
 					break;
 				case 0:
 					view.showSuccess("Saindo do sistema... Até logo!");
@@ -56,6 +53,6 @@ public class EcompCtrl {
 				default:
 					view.showError("Opção inválida. Tente novamente.");
 			}
-		} while (opcao != 0);
+		} while (option != 0);
 	}
 }
