@@ -1,7 +1,6 @@
 package views;
 
 import java.util.*;
-
 import models.Activity;
 
 public class RegisterActivityView extends GenericView {
@@ -10,7 +9,6 @@ public class RegisterActivityView extends GenericView {
         super();
     }
 
-    @Override
     public void showTitle() {
         System.out.println("=== Cadastrar Nova Atividade ===");
     }
@@ -42,7 +40,6 @@ public class RegisterActivityView extends GenericView {
             System.out.print("Participante: ");
             String participant = getInput();
 
-            // Verifica se a entrada está vazia (para parar o loop)
             if (participant.trim().isEmpty()) {
                 break;
             }
@@ -68,4 +65,3 @@ public class RegisterActivityView extends GenericView {
 		view.showContinue();
 	}
 }
-

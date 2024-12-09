@@ -1,58 +1,58 @@
 package controllers;
 
-import repositories.ProjetoRepository;
+import repositories.MemberRepository;
+import repositories.ProjectRepository;
 import views.EcompView;
 
 // Facade Pattern
 public class EcompCtrl {
 
-    private EcompView view;
-    private ProjetoRepository projetos;
+	private EcompView view;
+	private ProjectRepository projectRepo;
+	private MemberRepository memberRepo;
 
-    public EcompCtrl() {
-        this.view = new EcompView();
-        this.projetos = new ProjetoRepository();
-    }
+	public EcompCtrl() {
+		this.view = new EcompView();
+		this.projectRepo = new ProjectRepository();
+		this.memberRepo = new MemberRepository();
+	}
 
-    // Método que processa a escolha do usuário
-    public void iniciar() {
-        int opcao;
-        do {
-            // Exibe o menu e lê a opção do usuário via view
-            view.clearScreen();
-            view.showMenu();
-            opcao = view.getInputInt();
-            view.clearScreen();
+	public void start() {
+		int option;
+		do {
+			view.clearScreen();
+			view.showMenu();
+			option = view.getInputInt();
+			view.clearScreen();
 
-            // Processa a opção selecionada
-            switch (opcao) {
-                case 1:
-                    new CadastrarProjetoCtrl().cadastrarProjeto(projetos);
-                    break;
-                case 2:
-                    new CadastrarEtapasCtrl().cadastrarEtapa(projetos);
-                    break;
-                case 3:
-                    new AdicionarDevsCtrl().adicionarDevs();
-                    break;
-                case 4:
+			switch (option) {
+				case 1:
+					new RegisterProjectCtrl().registerProject(projectRepo);
+					break;
+				case 2:
+					new RegisterStageCtrl().registerStage(projectRepo);
+					break;
+				case 3:
+					new AddDevsCtrl().addDevs();
+					break;
+				case 4:
 					new RegisterActivityCtrl().registerActivity();
-                    break;
-                case 5:
-                    new CadastrarNotasFiscaisCtrl().cadastrarNotasFiscais();
-                    break;
-                case 6:
-                    new CadastrarMembroCtrl().cadastrarMembro();
-                    break;
-                case 7:
-                    new GerarRelatorioCtrl().gerarRelatorio();
-                    break;
-                case 0:
-                    view.showSuccess("Saindo do sistema... Até logo!");
-                    break;
-                default:
-                    view.showError("Opção inválida. Tente novamente.");
-            }
-        } while (opcao != 0);
-    }
+					break;
+				case 5:
+					new RegisterInvoiceCtrl().registerInvoice();
+					break;
+				case 6:
+					new RegisterMemberCtrl().registerMember(memberRepo);
+					break;
+				case 7:
+					new GenerateReportCtrl().generateReport();
+					break;
+				case 0:
+					view.showSuccess("Saindo do sistema... Até logo!");
+					break;
+				default:
+					view.showError("Opção inválida. Tente novamente.");
+			}
+		} while (option != 0);
+	}
 }
