@@ -29,16 +29,15 @@ public class Member {
         this.birthDate = birthDate;
     }
 
-    // Getters
     public String getName() {
         return name;
     }
 
-    public String getCpf() {
+    public String getCPF() {
         return cpf;
     }
 
-    public String getRg() {
+    public String getRG() {
         return rg;
     }
 
