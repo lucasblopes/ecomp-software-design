@@ -19,7 +19,7 @@ public class RegisterStageCtrl {
 
         Optional<Project> foundProject = projectRepo.findProject(selectedProject);
         if (foundProject.isPresent()) {
-            //foundProject.get().printProject();
+            foundProject.get().printProject();
 		} else {
            view.showError("Projeto não encontrado.");
 		}
