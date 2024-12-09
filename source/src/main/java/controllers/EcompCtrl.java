@@ -1,7 +1,6 @@
 package controllers;
 
-import repositories.MemberRepository;
-import repositories.ProjectRepository;
+import repositories.*;
 import views.EcompView;
 
 // Facade Pattern
@@ -10,11 +9,13 @@ public class EcompCtrl {
 	private EcompView view;
 	private ProjectRepository projectRepo;
 	private MemberRepository memberRepo;
+	private ActivityRepository activityRepo;
 
 	public EcompCtrl() {
 		this.view = new EcompView();
 		this.projectRepo = new ProjectRepository();
 		this.memberRepo = new MemberRepository();
+		this.activityRepo = new ActivityRepository();
 	}
 
 	public void start() {
@@ -36,7 +37,7 @@ public class EcompCtrl {
 					new AddDevsCtrl().addDevs();
 					break;
 				case 4:
-					new RegisterActivityCtrl().registerActivity(memberRepo);
+					new RegisterActivityCtrl().registerActivity(activityRepo, memberRepo);
 					break;
 				case 5:
 					new RegisterInvoiceCtrl().registerInvoice();
