@@ -6,32 +6,33 @@ import java.util.List;
 import java.util.Optional;
 
 // Data Access Object Pattern
-public class ProjetoRepository {
-    private List<Projeto> projetos;
+public class ProjectRepository {
 
-    public ProjetoRepository() {
-        this.projetos = new ArrayList<>();
+    private List<Project> projects;
+
+    public ProjectRepository() {
+        this.projects = new ArrayList<>();
     }
 
-    public List<Projeto> getProjetos() {
-        return projetos;
+    public List<Project> getProjects() {
+        return projects;
     }
 
-    public void setProjetos(List<Projeto> projetos) {
-        this.projetos = projetos;
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
     }
 
-    public void adicionarProjeto(Projeto projeto) {
-        projetos.add(projeto);
+    public void addProject(Projeto project) {
+        projects.add(project);
     }
 
-    public void removerProjeto(Projeto projeto) {
-        projetos.remove(projeto);
+    public void removeProject(Projeto project) {
+        projects.remove(project);
     }
 
-    public Optional<Projeto> buscarProjeto(String titulo) {
-        return projetos.stream()
-                .filter(p -> p.getTitulo().equalsIgnoreCase(titulo))
+    public Optional<Project> findProject(String title) {
+        return projects.stream()
+                .filter(p -> p.getTitulo().equalsIgnoreCase(title))
                 .findFirst();
     }
 }

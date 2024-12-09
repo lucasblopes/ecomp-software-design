@@ -6,32 +6,33 @@ import java.util.List;
 import java.util.Optional;
 
 // Data Access Object Pattern
-public class MembroRepository {
-	private List<Membro> membros;
+public class MemberRepository {
 
-	public MembroRepository() {
-		this.membros = new ArrayList<>();
+	private List<Member> members;
+
+	public MemberRepository() {
+		this.members = new ArrayList<>();
 	}
 
-	public List<Membro> getMembros() {
-		return membros;
+	public List<Membro> getMembers() {
+		return members;
 	}
 
-	public void setMembros(List<Membro> membros) {
-		this.membros = membros;
+	public void setMembers(List<Member> members) {
+		this.members = members;
 	}
 
-	public void adicionarMembro(Membro membro) {
-		membros.add(membro);
+	public void addMember(Membro member) {
+		members.add(member);
 	}
 
-	public void removerMembro(Membro membro) {
-		membros.remove(membro);
+	public void removeMember(Membro member) {
+		members.remove(member);
 	}
 
-	public Optional<Membro> buscarMembro(String nome) {
-		return membros.stream()
-			.filter(p -> p.getNome().equalsIgnoreCase(nome))
+	public Optional<Membro> findMember(String name) {
+		return members.stream()
+			.filter(p -> p.getNome().equalsIgnoreCase(name))
 			.findFirst();
 	}
 }
