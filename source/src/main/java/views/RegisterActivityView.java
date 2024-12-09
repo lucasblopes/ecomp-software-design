@@ -62,6 +62,6 @@ public class RegisterActivityView extends GenericView {
 
 	public void showActivity(Activity activity) {
 		System.out.println(activity.toString());
-		view.showContinue();
+		showContinue();
 	}
 }
