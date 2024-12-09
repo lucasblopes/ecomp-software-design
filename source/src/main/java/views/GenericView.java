@@ -4,32 +4,30 @@ import java.util.Scanner;
 
 public class GenericView {
 
-    private Scanner scanner;
+	private Scanner scanner;
 
-    public GenericView() {
-        scanner = new Scanner(System.in);
-    }
+	public GenericView() {
+		scanner = new Scanner(System.in);
+	}
 
-    // Lê o input do usuário
-    public String getInput() {
-        return scanner.nextLine();
-    }
+	// Lê o input do usuário
+	public String getInput() {
+		return scanner.nextLine();
+	}
 
-    // Lê o input int do usuário
-    public int getInputInt() {
-        try {
-            return Integer.parseInt(getInput());
-        } catch (NumberFormatException e) {
-            showError("Entrada inválida. Insira um número inteiro.");
-            return getInputInt();
-        }
-    }
+	// Lê o input int do usuário
+	public int getInputInt() {
+		try {
+			return Integer.parseInt(getInput());
+		} catch (NumberFormatException e) {
+			showError("Entrada inválida. Insira um número inteiro.");
+			return 0;
+		}
+	}
 
     // Exibe mensagem de erro
     public void showError(String message) {
-        System.out.println();
-        System.out.println("Erro: " + message);
-        showContinue();
+        System.out.println("\nErro: " + message + "\n");
     }
 
     // Exibe mensagem de sucesso
