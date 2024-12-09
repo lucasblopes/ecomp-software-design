@@ -3,77 +3,87 @@ package models;
 import java.time.LocalDate;
 import java.util.List;
 
-public class MembroBuilder {
-	private String nome;
+public class MemberBuilder {
+	private String name;
 	private String cpf;
 	private String rg;
 	private String email;
-	private String telefone;
-	private String cargo;
-	private String diretoria;
-	private String curso;
-	private LocalDate dataNascimento;
+	private String phone;
+	private String position;
+	private String board;
+	private String course;
+	private LocalDate birthDate;
 
-	public MembroBuilder() {
-		// Inicializa os valores caso necessário
+	// Construtor padrão que pode inicializar os valores, se necessário
+	public MemberBuilder() {
 	}
 
-	public MembroBuilder nome(String nome) {
-		this.nome = nome;
+	// Define o nome do membro
+	public MemberBuilder name(String name) {
+		this.name = name;
 		return this;
 	}
 
-	public MembroBuilder cpf(String cpf) {
+	// Define o CPF do membro
+	public MemberBuilder cpf(String cpf) {
 		this.cpf = cpf;
 		return this;
 	}
 
-	public MembroBuilder rg(String rg) {
+	// Define o RG do membro
+	public MemberBuilder rg(String rg) {
 		this.rg = rg;
 		return this;
 	}
 
-	public MembroBuilder email(String email) {
+	// Define o email do membro
+	public MemberBuilder email(String email) {
 		this.email = email;
 		return this;
 	}
 
-	public MembroBuilder telefone(String telefone) {
-		this.telefone = telefone;
+	// Define o telefone do membro
+	public MemberBuilder phone(String phone) {
+		this.phone = phone;
 		return this;
 	}
 
-	public MembroBuilder cargo(String cargo) {
-		this.cargo = cargo;
+	// Define o cargo do membro
+	public MemberBuilder position(String position) {
+		this.position = position;
 		return this;
 	}
 
-	public MembroBuilder diretoria(String diretoria) {
-		this.diretoria = diretoria;
+	// Define a diretoria do membro
+	public MemberBuilder board(String board) {
+		this.board = board;
 		return this;
 	}
 
-	public MembroBuilder curso(String curso) {
-		this.curso = curso;
+	// Define o curso do membro
+	public MemberBuilder course(String course) {
+		this.course = course;
 		return this;
 	}
 
-	public MembroBuilder dataNascimento(LocalDate dataNascimento) {
-		this.dataNascimento = dataNascimento;
+	// Define a data de nascimento do membro
+	public MemberBuilder birthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
 		return this;
 	}
 
-	// Método para construir o objeto Membro
-	public Membro build() {
-		Membro membro = new Membro(nome, cpf, rg, email, telefone, cargo, diretoria, curso, dataNascimento);
+	// Método para construir o objeto Member
+	public Member build() {
+		Member member = new Member(name, cpf, rg, email, phone, position, board, course, birthDate);
 
 		// Valida os campos do membro
-		List<String> erros = membro.validarCampos();
-		if (!erros.isEmpty()) {
-			System.out.println("Erro de validação: " + String.join(", ", erros));
+		List<String> errors = member.validateFields();
+		if (!errors.isEmpty()) {
+			System.out.println("Erro de validação: " + String.join(", ", errors));
 			return null;
 		}
 
-		return membro;
+		return member;
 	}
 }
+

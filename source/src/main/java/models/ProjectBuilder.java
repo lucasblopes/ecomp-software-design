@@ -4,65 +4,74 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjetoBuilder {
-    private String titulo;
-    private String cliente;
-    private LocalDate dataInicio;
-    private LocalDate prazoEntrega;
-    private String descricao;
-    private String contratoPDF;
-    private List<Etapa> etapas;
+public class ProjectBuilder {
+    private String title;
+    private String client;
+    private LocalDate startDate;
+    private LocalDate deliveryDeadline;
+    private String description;
+    private String contractPDF;
+    private List<Stage> stages;
 
-    public ProjetoBuilder() {
-        this.etapas = new ArrayList<>();
+    // Construtor padrão que inicializa a lista de etapas
+    public ProjectBuilder() {
+        this.stages = new ArrayList<>();
     }
 
-    public ProjetoBuilder titulo(String titulo) {
-        this.titulo = titulo;
+    // Define o título do projeto
+    public ProjectBuilder title(String title) {
+        this.title = title;
         return this;
     }
 
-    public ProjetoBuilder cliente(String cliente) {
-        this.cliente = cliente;
+    // Define o cliente do projeto
+    public ProjectBuilder client(String client) {
+        this.client = client;
         return this;
     }
 
-    public ProjetoBuilder dataInicio(LocalDate dataInicio) {
-        this.dataInicio = dataInicio;
+    // Define a data de início do projeto
+    public ProjectBuilder startDate(LocalDate startDate) {
+        this.startDate = startDate;
         return this;
     }
 
-    public ProjetoBuilder prazoEntrega(LocalDate prazoEntrega) {
-        this.prazoEntrega = prazoEntrega;
+    // Define o prazo de entrega do projeto
+    public ProjectBuilder deliveryDeadline(LocalDate deliveryDeadline) {
+        this.deliveryDeadline = deliveryDeadline;
         return this;
     }
 
-    public ProjetoBuilder descricao(String descricao) {
-        this.descricao = descricao;
+    // Define a descrição do projeto
+    public ProjectBuilder description(String description) {
+        this.description = description;
         return this;
     }
 
-    public ProjetoBuilder contratoPDF(String contratoPDF) {
-        this.contratoPDF = contratoPDF;
+    // Define o arquivo PDF do contrato do projeto
+    public ProjectBuilder contractPDF(String contractPDF) {
+        this.contractPDF = contractPDF;
         return this;
     }
 
-    public ProjetoBuilder etapas(List<Etapa> etapas) {
-        this.etapas = etapas;
+    // Define as etapas do projeto
+    public ProjectBuilder stages(List<Stage> stages) {
+        this.stages = stages;
         return this;
     }
 
-    // Método para construir o objeto Projeto
-    public Projeto build() {
-        Projeto projeto = new Projeto(titulo, cliente, dataInicio, prazoEntrega, descricao, contratoPDF, etapas);
+    // Método para construir o objeto Project
+    public Project build() {
+        Project project = new Project(title, client, startDate, deliveryDeadline, description, contractPDF, stages);
 
         // Valida os campos do projeto
-        List<String> erros = projeto.validarCampos();
-        if (!erros.isEmpty()) {
-            System.out.println("Erro de validação: " + String.join(", ", erros));
+        List<String> errors = project.validateFields();
+        if (!errors.isEmpty()) {
+            System.out.println("Erro de validação: " + String.join(", ", errors));
             return null;
         }
 
-        return projeto;
+        return project;
     }
 }
+

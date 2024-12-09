@@ -1,27 +1,33 @@
 package models;
 
-public class Etapa {
+public class Stage {
 
-    private String cronograma;
+    private String schedule;
     private String status;
 
-    public Etapa() {
+    // Construtor padrão
+    public Stage() {
 
     }
 
-    public String getCronograma() {
-        return cronograma;
+    // Getter para o cronograma
+    public String getSchedule() {
+        return schedule;
     }
 
+    // Getter para o status
     public String getStatus() {
         return status;
     }
 
+    // Setter para o status
     public void setStatus(String status) {
         this.status = status;
     }
 
-    public void setCronograma(String cronograma) {
-        this.cronograma = cronograma;
+    // Setter para o cronograma
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
     }
 }
+

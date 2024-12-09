@@ -4,83 +4,83 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Projeto {
-    private String titulo;
-    private String cliente;
-    private LocalDate dataInicio;
-    private LocalDate prazoEntrega;
-    private String descricao;
-    private String contratoPDF;
-    private List<Etapa> etapas;
+public class Project {
+    private String title;
+    private String client;
+    private LocalDate startDate;
+    private LocalDate deliveryDeadline;
+    private String description;
+    private String contractPDF;
+    private List<Stage> stages;
 
-    // Construtor protected para que apenas ProjetoBuilder possa instanciar
-    protected Projeto(String titulo, String cliente, LocalDate dataInicio, LocalDate prazoEntrega,
-            String descricao, String contratoPDF, List<Etapa> etapas) {
-        this.titulo = titulo;
-        this.cliente = cliente;
-        this.dataInicio = dataInicio;
-        this.prazoEntrega = prazoEntrega;
-        this.descricao = descricao;
-        this.contratoPDF = contratoPDF;
-        this.etapas = etapas == null ? new ArrayList<>() : etapas; // Evita null
+    // Construtor protected para que apenas ProjectBuilder possa instanciar
+    protected Project(String title, String client, LocalDate startDate, LocalDate deliveryDeadline,
+                      String description, String contractPDF, List<Stage> stages) {
+        this.title = title;
+        this.client = client;
+        this.startDate = startDate;
+        this.deliveryDeadline = deliveryDeadline;
+        this.description = description;
+        this.contractPDF = contractPDF;
+        this.stages = stages == null ? new ArrayList<>() : stages; // Evita null
     }
 
     // Getters (sem setters para garantir imutabilidade)
-    public String getTitulo() {
-        return titulo;
+    public String getTitle() {
+        return title;
     }
 
-    public String getCliente() {
-        return cliente;
+    public String getClient() {
+        return client;
     }
 
-    public LocalDate getDataInicio() {
-        return dataInicio;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public LocalDate getPrazoEntrega() {
-        return prazoEntrega;
+    public LocalDate getDeliveryDeadline() {
+        return deliveryDeadline;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getDescription() {
+        return description;
     }
 
-    public String getContratoPDF() {
-        return contratoPDF;
+    public String getContractPDF() {
+        return contractPDF;
     }
 
-    public List<Etapa> getEtapas() {
-        return etapas;
+    public List<Stage> getStages() {
+        return stages;
     }
 
-    // Adiciona Etapa ao projeto
-    public void addEtapa(Etapa etapa) {
-        if (this.etapas == null) {
-            this.etapas = new ArrayList<>();
+    // Adiciona Stage ao projeto
+    public void addStage(Stage stage) {
+        if (this.stages == null) {
+            this.stages = new ArrayList<>();
         }
-        this.etapas.add(etapa);
+        this.stages.add(stage);
     }
 
     // Método de validação dos campos com feedback detalhado
     public List<String> validarCampos() {
         List<String> erros = new ArrayList<>();
 
-        if (titulo == null || titulo.isEmpty()) {
+        if (title == null || title.isEmpty()) {
             erros.add("Título não pode ser vazio.");
         }
-        if (cliente == null || cliente.isEmpty()) {
+        if (client == null || client.isEmpty()) {
             erros.add("Cliente não pode ser vazio.");
         }
-        if (dataInicio == null) {
+        if (startDate == null) {
             erros.add("Data de Início não pode ser vazia.");
         }
-        if (prazoEntrega == null) {
+        if (deliveryDeadline == null) {
             erros.add("Prazo de Entrega não pode ser vazio.");
-        } else if (prazoEntrega.isBefore(dataInicio)) {
+        } else if (deliveryDeadline.isBefore(startDate)) {
             erros.add("O prazo de entrega deve ser maior que a data de início.");
         }
-        if (descricao == null || descricao.isEmpty()) {
+        if (description == null || description.isEmpty()) {
             erros.add("Descrição não pode ser vazia.");
         }
 
@@ -88,26 +88,27 @@ public class Projeto {
     }
 
     // Método para mostrar o projeto
-    public void printaProjeto() {
-        System.out.println("Título: " + this.titulo);
-        System.out.println("Cliente: " + this.cliente);
-        System.out.println("Data de Início: " + this.dataInicio);
-        System.out.println("Prazo de Entrega: " + this.prazoEntrega);
-        System.out.println("Descrição: " + this.descricao);
+    public void printProject() {
+        System.out.println("Título: " + this.title);
+        System.out.println("Cliente: " + this.client);
+        System.out.println("Data de Início: " + this.startDate);
+        System.out.println("Prazo de Entrega: " + this.deliveryDeadline);
+        System.out.println("Descrição: " + this.description);
 
-        if (this.contratoPDF == null)
+        if (this.contractPDF == null)
             System.out.println("Contrato não anexado");
         else
-            System.out.println("Contrato: " + this.contratoPDF);
+            System.out.println("Contrato: " + this.contractPDF);
 
         System.out.println("Etapas:");
-        for (Etapa etp : this.etapas) {
-            System.out.println("    Cronograma " + etp.getCronograma() + " Status do Projeto: " + etp.getStatus());
+        for (Stage stage : this.stages) {
+            System.out.println("    Cronograma " + stage.getSchedule() + " Status do Projeto: " + stage.getStatus());
         }
     }
 
-    // Método para acessar o construtor através do ProjetoBuilder
-    public static ProjetoBuilder builder() {
-        return new ProjetoBuilder();
+    // Método para acessar o construtor através do ProjectBuilder
+    public static ProjectBuilder builder() {
+        return new ProjectBuilder();
     }
 }
+
