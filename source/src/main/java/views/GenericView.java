@@ -27,9 +27,7 @@ public class GenericView {
 
     // Exibe mensagem de erro
     public void showError(String message) {
-        System.out.println();
-        System.out.println("Erro: " + message);
-        showContinue();
+        System.out.println("\nErro: " + message);
     }
 
     // Exibe mensagem de sucesso

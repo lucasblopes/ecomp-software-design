@@ -36,7 +36,7 @@ public class EcompCtrl {
 					new AddDevsCtrl().addDevs();
 					break;
 				case 4:
-					new RegisterActivityCtrl().registerActivity();
+					new RegisterActivityCtrl().registerActivity(memberRepo);
 					break;
 				case 5:
 					new RegisterInvoiceCtrl().registerInvoice();

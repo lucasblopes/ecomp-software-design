@@ -64,6 +64,11 @@ public class Activity {
 
     @Override
     public String toString() {
-		return new Gson().toJson(this);
-    }
+		return "Activity:\n" +
+			"Duração (em minutos): " + durationMinutes + "\n" +
+			"Localização: '" + location + '\'' + "\n" +
+			"Participantes: " + participants + "\n" +
+			"Objetivo: '" + goal + '\'' + "\n" +
+			"Resumo: '" + summary + '\'';
+	}
 }

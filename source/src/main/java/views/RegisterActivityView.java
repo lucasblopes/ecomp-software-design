@@ -2,6 +2,7 @@ package views;
 
 import java.util.*;
 import models.Activity;
+import repositories.MemberRepository;
 
 public class RegisterActivityView extends GenericView {
 
@@ -31,20 +32,24 @@ public class RegisterActivityView extends GenericView {
 		return getInput();
 	}
 
-	// TODO: checar se é membro da equipe antes de adicionar.
-	public List<String> getParticipants() {
+	public List<String> getParticipants(MemberRepository memberRepo) {
 		List<String> participants = new ArrayList<>();
-        System.out.println("Insira o nome dos participantes (deixe em branco para terminar):");
+		String name;
 
+        System.out.println("Insira o nome dos participantes (deixe em branco para terminar):");
         while (true) {
             System.out.print("Participante: ");
-            String participant = getInput();
+            name = getInput();
 
-            if (participant.trim().isEmpty()) {
-                break;
+            if (name.trim().isEmpty()) {
+				break;
             }
 
-            participants.add(participant);
+			if (memberRepo.findMember(name).isPresent()) {
+				participants.add(name);
+			} else {
+				System.out.printf("\nErro: %s não é um membro da equipe\n\n", name);
+			}
         }
 
         return participants;
