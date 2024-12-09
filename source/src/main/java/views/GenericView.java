@@ -2,7 +2,7 @@ package views;
 
 import java.util.Scanner;
 
-public abstract class GenericView {
+public class GenericView {
 
     private Scanner scanner;
 
@@ -25,40 +25,37 @@ public abstract class GenericView {
         }
     }
 
-    public abstract void showTitle();
-
     // Exibe mensagem de erro
     public void showError(String message) {
         System.out.println();
         System.out.println("Erro: " + message);
-        continuar();
+        showContinue();
     }
 
     // Exibe mensagem de sucesso
     public void showSuccess(String message) {
         System.out.println();
         System.out.println(message);
-        continuar();
+        showContinue();
     }
 
-    public void confirmar() {
+    public void showConfirmation() {
         System.out.println();
         System.out.print("ENTER para confirmar...");
         getInput();
-        limparTela();
+        clearScreen();
     }
 
-    public void continuar() {
+    public void showContinue() {
         System.out.println();
         System.out.print("ENTER para continuar...");
         getInput();
-        limparTela();
+        clearScreen();
     }
 
     // Limpa a tela do terminal
-    public void limparTela() {
+    public void clearScreen() {
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
     }
-
 }
