@@ -1,12 +1,11 @@
 package views;
 
-public class AdicionarDevsView extends GenericView {
+public class AddDevsView extends GenericView {
 
-    public AdicionarDevsView() {
+    public AddDevsView() {
         super();
     }
 	
-	@Override
 	public void showTitle() {
 	}
 }

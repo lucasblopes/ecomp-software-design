@@ -43,14 +43,14 @@ public class GenericView {
         System.out.println();
         System.out.print("ENTER para confirmar...");
         getInput();
-        limparTela();
+        clearScreen();
     }
 
     public void showContinue() {
         System.out.println();
         System.out.print("ENTER para continuar...");
         getInput();
-        limparTela();
+        clearScreen();
     }
 
     // Limpa a tela do terminal
@@ -58,5 +58,4 @@ public class GenericView {
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
     }
-
 }

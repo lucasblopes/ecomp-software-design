@@ -1,12 +1,11 @@
 package views;
 
-public class CadastrarAtividadeView extends GenericView {
+public class RegisterActivityView extends GenericView {
 
-    public CadastrarAtividadeView() {
+    public RegisterActivityView() {
         super();
     }
 	
-	@Override
 	public void showTitle() {
 	}
 }

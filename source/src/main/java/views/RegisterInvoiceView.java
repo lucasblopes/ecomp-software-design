@@ -1,12 +1,11 @@
 package views;
 
-public class CadastrarNotasFiscaisView extends GenericView {
+public class RegisterInvoiceView extends GenericView {
 
-    public CadastrarNotasFiscaisView() {
+    public RegisterInvoiceView() {
         super();
     }
 
-	@Override
 	public void showTitle() {
 	}
 }

@@ -3,15 +3,14 @@ package views;
 import java.time.LocalDate;
 import utils.DateUtil;
 
-public class CadastrarMembroView extends GenericView {
-
-	public CadastrarMembroView() {
+public class RegisterMemberView extends GenericView {
+	public RegisterMemberView() {
 		super();
 	}
 
 	// Exibe o menu para cadastrar o membro
-	public void showCadastroMembroScreen() {
-		this.showTitle();
+	public void showMemberRegistrationScreen() {
+		showTitle();
 		System.out.println("Nome: ");
 		System.out.println("CPF: ");
 		System.out.println("RG: ");
@@ -24,19 +23,18 @@ public class CadastrarMembroView extends GenericView {
 		continuar();
 	}
 
-	public String inputNome() {
-		this.showTitle();
+	public String getName() {
 		System.out.print("Nome: ");
-		String nome = getInput();
-		while (nome == null || nome.isEmpty()) {
+		String name = getInput();
+		while (name == null || name.isEmpty()) {
 			showError("Nome não pode ser vazio.");
 			System.out.print("Nome: ");
-			nome = getInput();
+			name = getInput();
 		}
-		return nome;
+		return name;
 	}
 
-	public String inputCpf() {
+	public String getCpf() {
 		System.out.print("CPF (somente números): ");
 		String cpf = getInput();
 		while (cpf == null || cpf.isEmpty() || !cpf.matches("\\d{11}")) {
@@ -47,7 +45,7 @@ public class CadastrarMembroView extends GenericView {
 		return cpf;
 	}
 
-	public String inputRg() {
+	public String getRg() {
 		System.out.print("RG: ");
 		String rg = getInput();
 		while (rg == null || rg.isEmpty()) {
@@ -58,7 +56,7 @@ public class CadastrarMembroView extends GenericView {
 		return rg;
 	}
 
-	public String inputEmail() {
+	public String getEmail() {
 		System.out.print("Email: ");
 		String email = getInput();
 		while (email == null || email.isEmpty() || !email.contains("@")) {
@@ -69,67 +67,66 @@ public class CadastrarMembroView extends GenericView {
 		return email;
 	}
 
-	public String inputTelefone() {
+	public String getPhone() {
 		System.out.print("Telefone (somente números): ");
-		String telefone = getInput();
-		while (telefone == null || telefone.isEmpty() || !telefone.matches("\\d+")) {
+		String phone = getInput();
+		while (phone == null || phone.isEmpty() || !phone.matches("\\d+")) {
 			showError("Telefone inválido. Deve conter apenas números.");
 			System.out.print("Telefone (somente números): ");
-			telefone = getInput();
+			phone = getInput();
 		}
-		return telefone;
+		return phone;
 	}
 
-	public String inputCargo() {
+	public String getPosition() {
 		System.out.print("Cargo: ");
-		String cargo = getInput();
-		while (cargo == null || cargo.isEmpty()) {
+		String position = getInput();
+		while (position == null || position.isEmpty()) {
 			showError("Cargo não pode ser vazio.");
 			System.out.print("Cargo: ");
-			cargo = getInput();
+			position = getInput();
 		}
-		return cargo;
+		return position;
 	}
 
-	public String inputDiretoria() {
+	public String getDepartment() {
 		System.out.print("Diretoria: ");
-		String diretoria = getInput();
-		while (diretoria == null || diretoria.isEmpty()) {
+		String department = getInput();
+		while (department == null || department.isEmpty()) {
 			showError("Diretoria não pode ser vazia.");
 			System.out.print("Diretoria: ");
-			diretoria = getInput();
+			department = getInput();
 		}
-		return diretoria;
+		return department;
 	}
 
-	public String inputCurso() {
+	public String getCourse() {
 		System.out.print("Curso: ");
-		String curso = getInput();
-		while (curso == null || curso.isEmpty()) {
+		String course = getInput();
+		while (course == null || course.isEmpty()) {
 			showError("Curso não pode ser vazio.");
 			System.out.print("Curso: ");
-			curso = getInput();
+			course = getInput();
 		}
-		return curso;
+		return course;
 	}
-
-	public LocalDate inputDataNascimento() {
+	
+	public LocalDate getBirthDate() {
 		System.out.print("Data de Nascimento (dd/MM/yyyy): ");
 		String data = getInput();
-		LocalDate dataNascimento = null;
-		while (dataNascimento == null) {
+		LocalDate birthDate = null;
+		while (birthDate == null) {
 			try {
-				dataNascimento = DateUtil.parseDate(data);
+				birthDate = DateUtil.parseDate(data);
 			} catch (IllegalArgumentException e) {
 				showError(e.getMessage());
 				System.out.print("Data de Nascimento (dd/MM/yyyy): ");
 				data = getInput();
 			}
 		}
-		return dataNascimento;
+		return birthDate;
 	}
 
-	@Override
 	public void showTitle() {
 		System.out.println("=== Cadastro de Membro ===");
 	}

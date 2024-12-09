@@ -1,12 +1,11 @@
 package views;
 
-public class GerarRelatorioView extends GenericView {
+public class GenerateReportView extends GenericView {
 
-    public GerarRelatorioView() {
+    public GenerateReportView() {
         super();
     }
 
-	@Override
 	public void showTitle() {
 	}
 }

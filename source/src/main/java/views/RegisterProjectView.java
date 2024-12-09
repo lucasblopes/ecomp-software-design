@@ -4,108 +4,107 @@ import java.time.LocalDate;
 import utils.PathUtil;
 import utils.DateUtil;
 
-public class CadastrarProjetoView extends GenericView {
+public class RegisterProjectView extends GenericView {
 
-    public CadastrarProjetoView() {
-        super();
-    }
+	public RegisterProjectView() {
+		super();
+	}
 
-    // Exibe o menu para cadastrar o projeto
-    public void showCadastroProjetoScreen() {
+	// Exibe o menu para cadastrar o projeto
+	public void showProjectRegistrationScreen() {
 		this.showTitle();
-        System.out.println("Titulo: ");
-        System.out.println("Cliente: ");
-        System.out.println("Data Inicial: ");
-        System.out.println("Prazo entrega: ");
-        System.out.println("Descricao: ");
-        System.out.println("Contrato em PDF: ");
-        continuar();
-    }
+		System.out.println("Titulo: ");
+		System.out.println("Cliente: ");
+		System.out.println("Data Inicial: ");
+		System.out.println("Prazo entrega: ");
+		System.out.println("Descricao: ");
+		System.out.println("Contrato em PDF: ");
+		continuar();
+	}
 
-    public String inputTitulo() {
-        this.showTitle();
-        System.out.print("Titulo: ");
-        String titulo = getInput();
-        while (titulo == null || titulo.isEmpty()) {
-            showError("Título não pode ser vazio.");
-            System.out.print("Titulo: ");
-            titulo = getInput();
-        }
-        return titulo;
-    }
+	public String getTitle() {
+		showTitle();
+		System.out.print("Titulo: ");
+		String title = getInput();
+		while (title == null || title.isEmpty()) {
+			showError("Título não pode ser vazio.");
+			System.out.print("Titulo: ");
+			title = getInput();
+		}
+		return title;
+	}
 
-    public String inputCliente() {
-        System.out.print("Cliente: ");
-        String cliente = getInput();
-        while (cliente == null || cliente.isEmpty()) {
-            showError("Cliente não pode ser vazio.");
-            System.out.print("Cliente: ");
-            cliente = getInput();
-        }
-        return cliente;
-    }
+	public String getClient() {
+		System.out.print("Cliente: ");
+		String client = getInput();
+		while (client == null || client.isEmpty()) {
+			showError("Cliente não pode ser vazio.");
+			System.out.print("Cliente: ");
+			client = getInput();
+		}
+		return client;
+	}
 
-    public LocalDate inputDataInicial() {
-        System.out.print("Data Inicial (dd/MM/yyyy): ");
-        String data = getInput();
-        LocalDate dataInicial = null;
-        while (dataInicial == null) {
-            try {
-                dataInicial = DateUtil.parseDate(data);
-            } catch (IllegalArgumentException e) {
-                showError(e.getMessage());
-                System.out.print("Data Inicial (dd/MM/yyyy): ");
-                data = getInput();
-            }
-        }
-        return dataInicial;
-    }
+	public LocalDate getInitialDate() {
+		System.out.print("Data Inicial (dd/MM/yyyy): ");
+		String data = getInput();
+		LocalDate initialDate = null;
+		while (initialDate == null) {
+			try {
+				initialDate = DateUtil.parseDate(data);
+			} catch (IllegalArgumentException e) {
+				showError(e.getMessage());
+				System.out.print("Data Inicial (dd/MM/yyyy): ");
+				data = getInput();
+			}
+		}
+		return initialDate;
+	}
 
-    public LocalDate inputPrazoEntrega() {
-        System.out.print("Prazo de entrega (dd/MM/yyyy): ");
-        String prazo = getInput();
-        LocalDate prazoEntrega = null;
-        while (prazoEntrega == null) {
-            try {
-                prazoEntrega = DateUtil.parseDate(prazo);
-            } catch (IllegalArgumentException e) {
-                showError(e.getMessage());
-                System.out.print("Prazo de entrega (dd/MM/yyyy): ");
-                prazo = getInput();
-            }
-        }
-        return prazoEntrega;
-    }
+	public LocalDate getDeliveryDeadline() {
+		System.out.print("Prazo de entrega (dd/MM/yyyy): ");
+		String prazo = getInput();
+		LocalDate deliveryDeadline = null;
+		while (deliveryDeadline == null) {
+			try {
+				deliveryDeadline = DateUtil.parseDate(prazo);
+			} catch (IllegalArgumentException e) {
+				showError(e.getMessage());
+				System.out.print("Prazo de entrega (dd/MM/yyyy): ");
+				prazo = getInput();
+			}
+		}
+		return deliveryDeadline;
+	}
 
-    public String inputDescricao() {
-        System.out.print("Descricao: ");
-        String descricao = getInput();
-        while (descricao == null || descricao.isEmpty()) {
-            showError("Descrição não pode ser vazia.");
-            System.out.print("Descricao: ");
-            descricao = getInput();
-        }
-        return descricao;
-    }
+	public String getDescription() {
+		System.out.print("Descricao: ");
+		String description = getInput();
+		while (description == null || description.isEmpty()) {
+			showError("Descrição não pode ser vazia.");
+			System.out.print("Descricao: ");
+			description = getInput();
+		}
+		return description;
+	}
 
-    public String inputCaminhoContratoPDF() {
+	public String getPDFContractPath() {
 		this.showTitle();
-        System.out.print("Caso tenha um contrato PDF, adicione o caminho dele: ");
-        String path = getInput();
-        if (!path.isEmpty()) {
-            showTelaContratoImportado(path);
-        } else {
-            showError("Contrato PDF não anexado!");
-        }
-        return path;
-    }
+		System.out.print("Caso tenha um contrato PDF, adicione o caminho dele: ");
+		String path = getInput();
+		if (!path.isEmpty()) {
+			showImportedContractScreen(path);
+		} else {
+			showError("Contrato PDF não anexado!");
+		}
+		return path;
+	}
 
-    public void showTelaContratoImportado(String caminhoContratoPDF) {
-        System.out.println("Contrato adicionado: " + PathUtil.getLastPartOfPath(caminhoContratoPDF));
-        continuar();
-    }
+	public void showImportedContractScreen(String contractPDFPath) {
+		System.out.println("Contrato adicionado: " + PathUtil.getLastPartOfPath(contractPDFPath));
+		continuar();
+	}
 
-	@Override
 	public void showTitle() {
 		System.out.println("=== Cadastro de Projeto ===");
 	}
