@@ -48,7 +48,7 @@ public class RegisterActivityView extends GenericView {
 			if (memberRepo.findMember(name).isPresent()) {
 				participants.add(name);
 			} else {
-				System.out.printf("\nErro: %s não é um membro da equipe\n\n", name);
+				showError(String.format("'%s' não é um membro da equipe.", name));
 			}
         }
 

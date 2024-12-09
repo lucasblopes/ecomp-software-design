@@ -26,7 +26,8 @@ public class RegisterActivityCtrl {
 		activity.setGoal(goal);
 		activity.setSummary(summary);
 
-		view.showSuccess("Atividade cadastrada com sucesso!");
+		view.showTitle();
 		view.showActivity(activity);
+		view.showSuccess("Atividade cadastrada com sucesso!");
 	}
 }

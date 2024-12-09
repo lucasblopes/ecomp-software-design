@@ -19,17 +19,16 @@ public class RegisterMemberCtrl {
 
         view.showTitle();
 
+        String name = view.getName();
+
         // Coletar o CPF do membro (serve como identificador)
         String cpf = view.getCPF();
-
-        // Verifica se já existe um membro com o CPF fornecido
         if (memberRepo.findMember(cpf).isPresent()) {
             view.showError("Já existe um membro com esse CPF '" + cpf + "'. Tente novamente com um CPF diferente.");
             return;
         }
 
         // Coletar dados do membro
-        String name = view.getName();
         String rg = view.getRG();
         String email = view.getEmail();
         String phone = view.getPhone();

@@ -21,13 +21,13 @@ public class GenericView {
 			return Integer.parseInt(getInput());
 		} catch (NumberFormatException e) {
 			showError("Entrada inválida. Insira um número inteiro.");
-			return getInputInt();
+			return 0;
 		}
 	}
 
     // Exibe mensagem de erro
     public void showError(String message) {
-        System.out.println("\nErro: " + message);
+        System.out.println("\nErro: " + message + "\n");
     }
 
     // Exibe mensagem de sucesso

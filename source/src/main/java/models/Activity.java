@@ -64,8 +64,7 @@ public class Activity {
 
     @Override
     public String toString() {
-		return "Activity:\n" +
-			"Duração (em minutos): " + durationMinutes + "\n" +
+		return "Duração (em minutos): " + durationMinutes + "\n" +
 			"Localização: '" + location + '\'' + "\n" +
 			"Participantes: " + participants + "\n" +
 			"Objetivo: '" + goal + '\'' + "\n" +
