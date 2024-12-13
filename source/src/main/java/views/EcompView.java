@@ -10,7 +10,7 @@ public class EcompView extends GenericView {
 		System.out.println("=== Sistema Ecomp ===");
         System.out.println("1 - Cadastrar Projetos");
         System.out.println("2 - Cadastrar Etapas do Desenvolvimento do Projeto");
-        System.out.println("3 - Adicionar Desenvolvedores ao Projeto");
+        System.out.println("3 - Gerenciar Desenvolvedores");
         System.out.println("4 - Cadastrar Nova Atividade");
         System.out.println("5 - Cadastrar Notas Fiscais e Recibos");
         System.out.println("6 - Cadastrar Membro");
