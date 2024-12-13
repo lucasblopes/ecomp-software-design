@@ -6,33 +6,34 @@ import views.EcompView;
 // Facade Pattern
 public class EcompCtrl {
     private EcompView view;
-    private ProjectRepository projectRepo;
+    private ProjectRepository projRepo;
     private MemberRepository memberRepo;
     private ActivityRepository activityRepo;
+    private DevRepository devRepo;
 
-    private RegisterProjectCtrl projectCtrl;
+    private RegisterProjectCtrl regProjCtrl;
     private RegisterStageCtrl stageCtrl;
-    private AddDevsCtrl devsCtrl;
     private RegisterActivityCtrl activityCtrl;
     private RegisterInvoiceCtrl invoiceCtrl;
     private RegisterMemberCtrl memberCtrl;
-    private GenerateReportCtrl reportCtrl;
+    private GenerateReportCtrl genRepCtrl;
+    private DevCtrl devCtrl;
 
     public EcompCtrl() {
         // Inicialização dos repositórios
         this.view = new EcompView();
-        this.projectRepo = new ProjectRepository();
+        this.projRepo = new ProjectRepository();
         this.memberRepo = new MemberRepository();
         this.activityRepo = new ActivityRepository();
 
         // Inicialização dos controladores
-        this.projectCtrl = new RegisterProjectCtrl();
-        this.stageCtrl = new RegisterStageCtrl();
-        this.devsCtrl = new AddDevsCtrl();
-        this.activityCtrl = new RegisterActivityCtrl();
+        this.regProjCtrl = new RegisterProjectCtrl(this.projRepo);
+        this.stageCtrl = new RegisterStageCtrl(this.projRepo);
+        this.activityCtrl = new RegisterActivityCtrl(this.activityRepo, this.memberRepo);
+        this.memberCtrl = new RegisterMemberCtrl(this.memberRepo);
         this.invoiceCtrl = new RegisterInvoiceCtrl();
-        this.memberCtrl = new RegisterMemberCtrl();
-        this.reportCtrl = new GenerateReportCtrl();
+        this.genRepCtrl = new GenerateReportCtrl();
+        this.devCtrl = new DevCtrl(this.projRepo, this.memberRepo, this.devRepo);
     }
 
     public void start() {
@@ -50,25 +51,25 @@ public class EcompCtrl {
     private void processOption(int option) {
         switch (option) {
             case 1:
-                projectCtrl.registerProject(projectRepo);
+                regProjCtrl.registerProject();
                 break;
             case 2:
-                stageCtrl.registerStage(projectRepo);
+                stageCtrl.registerStage();
                 break;
             case 3:
-                devsCtrl.addDevs();
+                devCtrl.manage();
                 break;
             case 4:
-                activityCtrl.registerActivity(activityRepo, memberRepo);
+                activityCtrl.registerActivity();
                 break;
             case 5:
                 invoiceCtrl.registerInvoice();
                 break;
             case 6:
-                memberCtrl.registerMember(memberRepo);
+                memberCtrl.registerMember();
                 break;
             case 7:
-                reportCtrl.generateReport();
+                genRepCtrl.generateReport();
                 break;
             case 0:
                 view.showSuccess("Saindo do sistema... Até logo!");
