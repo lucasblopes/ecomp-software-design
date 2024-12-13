@@ -8,13 +8,15 @@ import views.RegisterProjectView;
 public class RegisterProjectCtrl {
 
     private RegisterProjectView view;
+    private ProjectRepository projectRepo;
 
-    public RegisterProjectCtrl() {
+    public RegisterProjectCtrl(ProjectRepository projRepo) {
         this.view = new RegisterProjectView();
+        this.projectRepo = projRepo;
     }
 
     // Método principal que gerencia o fluxo de cadastro
-    public void registerProject(ProjectRepository projectRepo) {
+    public void registerProject() {
         view.showProjectRegistrationScreen();
 
         String title = view.getTitle();
