@@ -12,6 +12,7 @@ public class ProjectBuilder {
     private String description;
     private String contractPDF;
     private List<Stage> stages;
+    private List<Dev> devs;
 
     // Construtor padrão que inicializa a lista de etapas
     public ProjectBuilder() {
@@ -60,9 +61,14 @@ public class ProjectBuilder {
         return this;
     }
 
+    public ProjectBuilder devs(List<Dev> devs) {
+        this.devs = devs;
+        return this;
+    }
+
     // Método para construir o objeto Project
     public Project build() {
-        Project project = new Project(title, client, startDate, deliveryDeadline, description, contractPDF, stages);
+        Project project = new Project(title, client, startDate, deliveryDeadline, description, contractPDF, stages, devs);
 
         // Valida os campos do projeto
         List<String> errors = project.validateFields();

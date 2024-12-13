@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Project {
+
     private String title;
     private String client;
     private LocalDate startDate;
@@ -12,10 +13,11 @@ public class Project {
     private String description;
     private String contractPDF;
     private List<Stage> stages;
+    private List<Dev> devs;
 
     // Construtor protected para que apenas ProjectBuilder possa instanciar
     protected Project(String title, String client, LocalDate startDate, LocalDate deliveryDeadline,
-                      String description, String contractPDF, List<Stage> stages) {
+                      String description, String contractPDF, List<Stage> stages, List<Dev> devs) {
         this.title = title;
         this.client = client;
         this.startDate = startDate;
@@ -23,6 +25,7 @@ public class Project {
         this.description = description;
         this.contractPDF = contractPDF;
         this.stages = stages == null ? new ArrayList<>() : stages; // Evita null
+        this.devs = devs == null ? new ArrayList<>() : devs;
     }
 
     // Getters (sem setters para garantir imutabilidade)
@@ -54,12 +57,20 @@ public class Project {
         return stages;
     }
 
+    public List<Dev> getDevs() {
+        return devs;
+    }
+
     // Adiciona Stage ao projeto
     public void addStage(Stage stage) {
         if (this.stages == null) {
             this.stages = new ArrayList<>();
         }
         this.stages.add(stage);
+    }
+
+    public void addDev(Dev dev) {
+        this.devs.add(dev);         
     }
 
     // Método de validação dos campos com feedback detalhado
@@ -89,6 +100,7 @@ public class Project {
 
     // Método para mostrar o projeto
     public void printProject() {
+
         System.out.println("Título: " + this.title);
         System.out.println("Cliente: " + this.client);
         System.out.println("Data de Início: " + this.startDate);

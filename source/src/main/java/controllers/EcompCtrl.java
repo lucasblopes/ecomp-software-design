@@ -7,15 +7,24 @@ import views.EcompView;
 public class EcompCtrl {
 
 	private EcompView view;
-	private ProjectRepository projectRepo;
+
+    private ProjectRepository projRepo;
 	private MemberRepository memberRepo;
 	private ActivityRepository activityRepo;
+    private DevRepository devRepo;
+
+    private DevCtrl devCtrl;
 
 	public EcompCtrl() {
+
 		this.view = new EcompView();
-		this.projectRepo = new ProjectRepository();
-		this.memberRepo = new MemberRepository();
-		this.activityRepo = new ActivityRepository();
+
+        this.projRepo = new ProjectRepository();
+        this.memberRepo = new MemberRepository();
+        this.devRepo = new DevRepository(); 
+        this.activityRepo = new ActivityRepository();
+
+        this.devCtrl = new DevCtrl(this.projRepo, this.memberRepo, this.devRepo);
 	}
 
 	public void start() {
@@ -28,14 +37,14 @@ public class EcompCtrl {
 
 			switch (option) {
 				case 1:
-					new RegisterProjectCtrl().registerProject(projectRepo);
+					new RegisterProjectCtrl().registerProject(projRepo);
 					break;
 				case 2:
-					new RegisterStageCtrl().registerStage(projectRepo);
+					new RegisterStageCtrl().registerStage(projRepo);
 					break;
 				case 3:
-					new AddDevsCtrl().addDevs();
-					break;
+                    this.devCtrl.manage();
+                    break;
 				case 4:
 					new RegisterActivityCtrl().registerActivity(activityRepo, memberRepo);
 					break;
