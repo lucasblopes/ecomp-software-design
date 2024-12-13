@@ -8,9 +8,17 @@ import java.util.List;
 
 public class RegisterActivityCtrl {
 
+    private ActivityRepository activityRepo;
+    private MemberRepository memberRepo;
+
+    public RegisterActivityCtrl(ActivityRepository actRepo, MemberRepository memberRepo) {
+        this.activityRepo = actRepo;
+        this.memberRepo = memberRepo;
+    }
+
 	// TODO: checar se o usuário está autenticado no sistema antes de registrar
 	// atividade.
-	public void registerActivity(ActivityRepository activityRepo, MemberRepository memberRepo) {
+	public void registerActivity() {
 		Activity activity = new Activity();
 		RegisterActivityView view = new RegisterActivityView();
 

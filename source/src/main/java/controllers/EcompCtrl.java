@@ -8,12 +8,18 @@ public class EcompCtrl {
 
 	private EcompView view;
 
+    private RegisterProjectCtrl regProjCtrl;
+    private RegisterStageCtrl regStageCtrl;
+    private RegisterActivityCtrl regActCtrl;
+    private RegisterMemberCtrl regMemberCtrl;
+    private RegisterInvoiceCtrl regInvCtrl;
+    private GenerateReportCtrl genRepCtrl;
+    private DevCtrl devCtrl;
+
     private ProjectRepository projRepo;
 	private MemberRepository memberRepo;
 	private ActivityRepository activityRepo;
     private DevRepository devRepo;
-
-    private DevCtrl devCtrl;
 
 	public EcompCtrl() {
 
@@ -24,6 +30,12 @@ public class EcompCtrl {
         this.devRepo = new DevRepository(); 
         this.activityRepo = new ActivityRepository();
 
+        this.regProjCtrl = new RegisterProjectCtrl(this.projRepo);
+        this.regStageCtrl = new RegisterStageCtrl(this.projRepo);
+        this.regActCtrl = new RegisterActivityCtrl(this.activityRepo, this.memberRepo);
+        this.regMemberCtrl = new RegisterMemberCtrl(this.memberRepo);
+        this.regInvCtrl = new RegisterInvoiceCtrl();
+        this.genRepCtrl = new GenerateReportCtrl();
         this.devCtrl = new DevCtrl(this.projRepo, this.memberRepo, this.devRepo);
 	}
 
@@ -37,25 +49,28 @@ public class EcompCtrl {
 
 			switch (option) {
 				case 1:
-					new RegisterProjectCtrl().registerProject(projRepo);
+                    this.regProjCtrl.registerProject();
 					break;
 				case 2:
-					new RegisterStageCtrl().registerStage(projRepo);
+                    this.regStageCtrl.registerStage();
 					break;
 				case 3:
                     this.devCtrl.manage();
                     break;
 				case 4:
-					new RegisterActivityCtrl().registerActivity(activityRepo, memberRepo);
+                    this.regActCtrl.registerActivity();
 					break;
 				case 5:
-					new RegisterInvoiceCtrl().registerInvoice();
+                    this.regInvCtrl.registerInvoice();
+					//new RegisterInvoiceCtrl().registerInvoice();
 					break;
 				case 6:
-					new RegisterMemberCtrl().registerMember(memberRepo);
+                    this.regMemberCtrl.registerMember();
+					//new RegisterMemberCtrl().registerMember(memberRepo);
 					break;
 				case 7:
-					new GenerateReportCtrl().generateReport();
+                    this.genRepCtrl.generateReport();
+					//new GenerateReportCtrl().generateReport();
 					break;
 				case 0:
 					view.showSuccess("Saindo do sistema... Até logo!");

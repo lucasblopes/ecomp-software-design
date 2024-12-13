@@ -7,13 +7,16 @@ import views.RegisterMemberView;
 import java.time.LocalDate;
 
 public class RegisterMemberCtrl {
-    private RegisterMemberView view;
 
-    public RegisterMemberCtrl() {
+    private RegisterMemberView view;
+    private MemberRepository memberRepo;
+
+    public RegisterMemberCtrl(MemberRepository memberRepo) {
         this.view = new RegisterMemberView();
+        this.memberRepo = memberRepo;
     }
 
-    public void registerMember(MemberRepository memberRepo) {
+    public void registerMember() {
         // Exibe a tela de cadastro de membro
         view.showMemberRegistrationScreen();
 

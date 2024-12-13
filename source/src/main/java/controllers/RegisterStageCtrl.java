@@ -6,13 +6,16 @@ import repositories.ProjectRepository;
 import views.RegisterStageView;
 
 public class RegisterStageCtrl {
-    private RegisterStageView view;
 
-    public RegisterStageCtrl() {
+    private RegisterStageView view;
+    private ProjectRepository projectRepo;
+
+    public RegisterStageCtrl(ProjectRepository projectRepo) {
 		this.view = new RegisterStageView();
+        this.projectRepo = projectRepo;
    	}
 
-    public void registerStage(ProjectRepository projectRepo) {
+    public void registerStage() {
 		view.showRegisterStageScreen(projectRepo);
 
         String selectedProject = view.selectProject();
