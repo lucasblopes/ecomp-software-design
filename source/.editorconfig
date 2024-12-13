@@ -1,4 +1,4 @@
 root = true
 
 [*.java]
-indent_style = tabs
+indent_style = tab
