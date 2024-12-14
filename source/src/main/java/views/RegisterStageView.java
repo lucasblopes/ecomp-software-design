@@ -11,6 +11,9 @@ public class RegisterStageView extends GenericView {
 	}
 
 	public void showProjects(ProjectRepository projectRepo) {
+		showTitle();
+		System.out.println("Selecione o nome do projeto desejado:");
+
 		if (projectRepo.getProjects().isEmpty()) {
 			showError("Nenhum projeto cadastrado ainda");
 			return;
@@ -21,15 +24,23 @@ public class RegisterStageView extends GenericView {
 		}
 	}
 
-	public void showRegisterStageScreen(ProjectRepository projectRepo) {
-		showTitle();
-		System.out.println("Selecione o nome do projeto desejado:");
-		showProjects(projectRepo);
-	}
-
 	public String selectProject() {
 		System.out.println("Projeto Selecionado: ");
 		return getInput();
+	}
+
+	public String getSchedule() {
+		System.out.println("Cronograma: ");
+		String schedule = getInput();
+
+		return schedule;
+	}
+
+	public String getStatus() {
+		System.out.println("Status do Projeto: ");
+		String status = getInput();
+
+		return status;
 	}
 
 	public void showTitle() {

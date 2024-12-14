@@ -16,7 +16,7 @@ public class RegisterStageCtrl {
    	}
 
     public void registerStage() {
-		view.showRegisterStageScreen(projectRepo);
+		view.showProjects(projectRepo);
 
         String selectedProject = view.selectProject();
 
@@ -26,5 +26,23 @@ public class RegisterStageCtrl {
 		} else {
            view.showError("Projeto não encontrado.");
 		}
+
+        String schedule = view.getSchedule();
+        String status = view.getStatus();
+
+        // Criação da etapa usando Builder Pattern
+        Stage stage = Stage.builder()
+                .schedule(schedule)
+                .status(status)
+                .build();
+
+        if(stage == null) {
+            view.showError("Etapa não foi cadastrada!");
+            return;
+        }
+
+        // Adiciona etapa ao projeto
+        foundProject.get().addStage(stage);
+        view.showSuccess("Etapa cadastrada com sucesso! Cronograma:" + stage.getSchedule() + " Status:" + stage.getStatus());
     }
 }

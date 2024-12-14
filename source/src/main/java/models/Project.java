@@ -112,9 +112,9 @@ public class Project {
         else
             System.out.println("Contrato: " + this.contractPDF);
 
-        System.out.println("Etapas:");
+        System.out.println("\n=== Etapas ===");
         for (Stage stage : this.stages) {
-            System.out.println("    Cronograma " + stage.getSchedule() + " Status do Projeto: " + stage.getStatus());
+            System.out.println("    Cronograma: " + stage.getSchedule() + " Status do Projeto: " + stage.getStatus());
         }
     }
 
