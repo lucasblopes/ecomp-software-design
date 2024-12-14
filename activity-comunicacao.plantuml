@@ -1,0 +1,69 @@
+@startuml
+
+
+rectangle EcompCtrl as EcompCtrl
+
+rectangle Activity as Activity
+rectangle ActivityRepository as ActivityRepository
+rectangle RegisterActivityView as RegisterActivityView
+rectangle RegisterActivityCtrl as RegisterActivityCtrl
+
+rectangle MemberRepository as MemberRepository
+
+rectangle GenericView as GenericView
+
+
+EcompCtrl --> RegisterActivityView: 1: showTitle()
+
+EcompCtrl --> RegisterActivityView: 2: getDurationMinutes()
+RegisterActivityView --> GenericView: 2.1: getInputInt()
+
+EcompCtrl --> RegisterActivityView: 3: getLocation()
+RegisterActivityView --> GenericView: 3.1: getInput()
+
+EcompCtrl            --> RegisterActivityView: 4: getParticipants(memberActivityRepository)
+RegisterActivityView --> GenericView         : 4.1: name = getInput()
+RegisterActivityView --> MemberRepository    : 4.2: member = findMember(name)
+RegisterActivityView --> RegisterActivityView: 4.3: participants.add(name)
+
+EcompCtrl --> RegisterActivityView: 5: getGoal()
+RegisterActivityView --> GenericView: 5.1: getInput()
+
+EcompCtrl --> RegisterActivityView: 6: getSummary()
+RegisterActivityView --> GenericView: 6.1: getInput()
+
+EcompCtrl --> RegisterActivityCtrl: 7: registerActivity()
+
+RegisterActivityCtrl --> RegisterActivityView: 8: showTitle()
+
+RegisterActivityView --> EcompCtrl: 9: Mostrar título
+
+EcompCtrl --> RegisterActivityView: 10: Inserir duração
+RegisterActivityView --> RegisterActivityCtrl: 11: Retornar duração
+
+EcompCtrl --> RegisterActivityView: 12: Inserir localização
+RegisterActivityView --> RegisterActivityCtrl: 13: Retornar localização
+
+EcompCtrl --> RegisterActivityView: 14: Inserir participantes
+RegisterActivityView --> MemberRepository: 15: findMember(nome)
+MemberRepository --> RegisterActivityView: 16: Retorna membro
+
+EcompCtrl --> RegisterActivityView: 17: Inserir objetivo
+RegisterActivityView --> RegisterActivityCtrl: 18: Retornar objetivo
+
+EcompCtrl --> RegisterActivityView: 19: Inserir resumo
+RegisterActivityView --> RegisterActivityCtrl: 20: Retornar resumo
+
+RegisterActivityCtrl --> Activity: 21: setDurationMinutes(duration)
+RegisterActivityCtrl --> Activity: 22: setLocation(location)
+RegisterActivityCtrl --> Activity: 23: setParticipants(participants)
+RegisterActivityCtrl --> Activity: 24: setGoal(goal)
+RegisterActivityCtrl --> Activity: 25: setSummary(summary)
+
+RegisterActivityCtrl --> ActivityRepository: 26: addActivity(Activity)
+ActivityRepository --> ActivityRepository: 27: activities.add(Activity)
+
+RegisterActivityView --> EcompCtrl: 28: Mostrar resumo da atividade
+RegisterActivityView --> EcompCtrl: 29: Mostrar sucesso
+
+@enduml

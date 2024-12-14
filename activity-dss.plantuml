@@ -1,0 +1,33 @@
+@startuml
+
+alt Está logado
+	Usuário -> Sistema: Escolhe registrar nova atividade
+	activate Sistema
+	deactivate Sistema
+else
+	Sistema --> Usuário: Você precisa estar cadastrado antes
+end
+
+Usuário -> Sistema: Informa a duração da atividade
+activate Sistema
+deactivate Sistema
+
+Usuário -> Sistema: Informa a localização da atividade
+activate Sistema
+deactivate Sistema
+
+Usuário -> Sistema: Informa os participantes da atividade
+activate Sistema
+deactivate Sistema
+
+Usuário -> Sistema: Informa o objetivo da atividade
+activate Sistema
+deactivate Sistema
+
+Usuário -> Sistema: Informa o resumo da atividade
+activate Sistema
+deactivate Sistema
+
+Sistema --> Usuário: Atividade cadastrada com sucesso!
+
+@enduml

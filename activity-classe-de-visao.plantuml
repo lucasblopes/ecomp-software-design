@@ -1,0 +1,66 @@
+@startuml
+' Diagrama de Classe de Visão
+
+package models {
+    class Activity {
+        - durationMinutes: int
+        - location: String
+        - participants: List<String>
+        - goal: String
+        - summary: String
+
+        + getDurationMinutes(): int
+        + setDurationMinutes(duration: int)
+        + getLocation(): String
+        + setLocation(location: String)
+        + getParticipants(): List<String>
+        + setParticipants(participants: List<String>)
+        + getGoal(): String
+        + setGoal(goal: String)
+        + getSummary(): String
+        + setSummary(summary: String)
+    }
+}
+
+package repositories {
+    class ActivityRepository {
+        - activities: List<Activity>
+
+        + getActivities(): List<Activity>
+        + setActivities(activities: List<Activity>)
+        + addActivity(activity: Activity)
+        + removeActivity(activity: Activity)
+    }
+
+    class MemberRepository {
+        + findMember(name: String): Optional<Member>
+    }
+}
+
+package views {
+    class RegisterActivityView {
+        + showTitle()
+        + getDurationMinutes(): int
+        + getLocation(): String
+        + getParticipants(memberRepo: MemberRepository): List<String>
+        + getGoal(): String
+        + getSummary(): String
+        + showActivity(activity: Activity)
+        + showSuccess(message: String)
+    }
+}
+
+package controllers {
+    class RegisterActivityCtrl {
+        - activityRepo: ActivityRepository
+        - memberRepo: MemberRepository
+
+        + registerActivity()
+    }
+}
+
+models.Activity --> repositories.ActivityRepository : "1" contém "*"
+repositories.ActivityRepository --> controllers.RegisterActivityCtrl : "1" é usado por "1"
+views.RegisterActivityView --> controllers.RegisterActivityCtrl : "1" é usado por "1"
+repositories.MemberRepository --> views.RegisterActivityView : "1" é usado por "1"
+@enduml

@@ -1,0 +1,86 @@
+@startuml
+
+EcompCtrl -> RegisterActivityCtrl: registerActivity()
+activate RegisterActivityCtrl
+
+RegisterActivityCtrl -> RegisterActivityView: showTitle()
+activate RegisterActivityView
+deactivate RegisterActivityView
+
+RegisterActivityCtrl -> RegisterActivityView: getDurationMinutes()
+activate RegisterActivityView
+loop duration <= 0
+	RegisterActivityView -> GenericView: duration = getInputInt()
+end
+deactivate RegisterActivityView
+
+RegisterActivityCtrl -> RegisterActivityView: getLocation()
+activate RegisterActivityView
+RegisterActivityView -> GenericView: location = getInput()
+deactivate RegisterActivityView
+
+RegisterActivityCtrl -> RegisterActivityView: getParticipants()
+activate RegisterActivityView
+loop !name.isEmpty()
+	RegisterActivityView -> GenericView: name = getInput()
+
+	RegisterActivityView -> memberRepository: member = findMember(name)
+	alt member.isPresent()
+		RegisterActivityView -> RegisterActivityView:participants.add(name)
+	end
+end
+RegisterActivityView --> RegisterActivityCtrl: paricipants
+deactivate RegisterActivityView
+
+RegisterActivityCtrl -> RegisterActivityView: getGoal()
+activate RegisterActivityView
+RegisterActivityView -> GenericView: goal = getInput()
+deactivate RegisterActivityView
+
+RegisterActivityCtrl -> RegisterActivityView: getSummary()
+activate RegisterActivityView
+RegisterActivityView -> GenericView: summary = getInput()
+deactivate RegisterActivityView
+
+RegisterActivityCtrl -> Activity: setDurationMinutes(durationMinutes)
+activate Activity
+deactivate Activity
+
+RegisterActivityCtrl -> Activity: setLocation(location)
+activate Activity
+deactivate Activity
+
+RegisterActivityCtrl -> Activity: setParticipants(memberRepo)
+activate Activity
+deactivate Activity
+
+RegisterActivityCtrl -> Activity: setGoal(goal)
+activate Activity
+deactivate Activity
+
+RegisterActivityCtrl -> Activity: setSummary(summary)
+activate Activity
+deactivate Activity
+
+RegisterActivityCtrl -> ActivityRepository: addActivity(activity)
+activate ActivityRepository
+ActivityRepository -> ActivityRepository: activities.add(activity)
+activate ActivityRepository
+deactivate ActivityRepository
+deactivate ActivityRepository
+
+RegisterActivityCtrl -> RegisterActivityView: showTitle()
+activate RegisterActivityView
+deactivate RegisterActivityView
+
+RegisterActivityCtrl -> RegisterActivityView: showActivity(activity)
+activate RegisterActivityView
+deactivate RegisterActivityView
+
+RegisterActivityCtrl -> RegisterActivityView: showSucess("Atividade cadastrada com sucesso!")
+activate RegisterActivityView
+deactivate RegisterActivityView
+
+deactivate RegisterActivityCtrl
+
+@enduml
