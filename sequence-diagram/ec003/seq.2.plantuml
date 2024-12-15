@@ -1,0 +1,47 @@
+@startuml
+actor User
+participant "devCtrl : DevCtrl" as DevCtrl
+participant "view : DevView" as DevView
+participant "dr : DevRepository" as DevRepository
+participant "dev : Dev" as Dev
+
+User -> DevCtrl : addIssueToDev()
+activate DevCtrl
+DevCtrl -> DevView : showAddIssueToDevScreen()
+activate DevView
+deactivate DevView
+
+' Loop para obter nome válido
+DevCtrl -> DevView : getDevName()
+activate DevView
+DevView --> DevCtrl : String
+deactivate DevView
+
+' Loop para obter issue válida
+DevCtrl -> DevView : getIssue()
+activate DevView
+DevView --> DevCtrl : String
+deactivate DevView
+
+DevCtrl -> DevView : getHours()
+activate DevView
+DevView --> DevCtrl : int
+deactivate DevView
+
+DevCtrl -> DevRepository : findDev(devName)
+activate DevRepository
+DevRepository --> DevCtrl : Optional<Dev>
+deactivate DevRepository
+
+alt Dev encontrado
+    DevCtrl -> Dev : addIssue(issue, hours)
+    activate Dev
+    deactivate Dev
+else Dev não encontrado
+    DevCtrl -> DevView : showError()
+    activate DevView
+    deactivate DevView
+end
+deactivate DevCtrl
+@enduml
+

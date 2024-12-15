@@ -1,0 +1,59 @@
+@startuml
+actor User
+participant "regStageCtrl : RegisterStageCtrl" as Ctrl
+participant "view : RegisterStageView" as View
+participant "gView : GenericView" as GView
+participant "repo: ProjectRepository" as Repo
+participant "p : Project" as Project
+
+User -> Ctrl: registerStage()
+activate Ctrl
+
+Ctrl -> View: showRegisterStageScreen(repo)
+activate View
+View -> Repo: getProjects()
+activate Repo
+Repo --> View: List<Project>
+deactivate Repo
+View -> GView: showTitle()
+activate GView
+deactivate GView
+
+View -> GView: clearScreen()
+activate GView
+deactivate GView
+deactivate View
+
+Ctrl -> View: showProjects(repo)
+activate View
+deactivate View
+
+Ctrl -> View: selectProject()
+activate View
+View -> GView: getInput()
+activate GView
+GView --> View: String
+deactivate GView
+View --> Ctrl: String
+deactivate View
+
+Ctrl -> Repo: findProject(p)
+activate Repo
+Repo --> Ctrl: Optional<Project>
+deactivate Repo
+
+alt Projeto encontrado
+    Ctrl -> Project: printProject()
+    activate Project
+    deactivate Project
+else Projeto não encontrado
+    Ctrl -> View: showError()
+    activate View
+    View -> GView: showError()
+    activate GView
+    deactivate GView
+    deactivate View
+end
+
+deactivate Ctrl
+@enduml
