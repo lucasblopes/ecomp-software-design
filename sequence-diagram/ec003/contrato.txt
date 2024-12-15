@@ -1,6 +1,6 @@
 Operação: addDevToProject()
 Referências Cruzadas: Caso de uso cadastrar desenvolvedor de algum projeto
-Descrição:
+Descrição: Adiciona um desenvolvedor a um projeto
 Pré-condições:
   - instância `devCtrl` de `DevCtrl` existe
   - instância `view` de `DevView` existe

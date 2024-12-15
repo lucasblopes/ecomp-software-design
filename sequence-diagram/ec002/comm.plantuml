@@ -1,0 +1,22 @@
+@startuml
+rectangle User
+rectangle "ctrl : RegisterStageCtrl" as Ctrl
+rectangle "view : RegisterStageView" as View
+rectangle "pr : ProjectRepository" as Pr
+rectangle ":proj[i] : Project" as Proji
+rectangle "p : Project" as Proj
+rectangle "Stage" as sSt
+rectangle "sb : StageBuilder" as Builder
+rectangle "s : Stage" as Stage
+
+User --(Ctrl): \n1:registerStage() <&arrow-bottom>
+Ctrl --(View): \n2:showProjects(pr)<&arrow-bottom>\n4:projName = selectProject()<&arrow-bottom>\n8: sch = getSchedule()<&arrow-bottom>\n 9: st = getStatus()<&arrow-bottom>\n 16: [s == null] showError() <&arrow-bottom>\n 18: [s != null] showSuccess() <&arrow-bottom>
+View --(Pr): \n3:list = getProjects() <&arrow-bottom>
+Ctrl --(Pr): \n5:p = findProject(projName) <&arrow-bottom>
+Pr --(Proji): \n6: *[projName == proj[i].getTitle] p = proj[i] <&arrow-bottom>
+Ctrl --(Proj): \n7:printProject() <&arrow-bottom>\n 17: addStage(s) <&arrow-bottom>
+Ctrl --(sSt): \n10: <<static>> sb = builder() <&arrow-bottom>
+sSt --(Builder): \n11 <<create>> sb = new StageBuilder()<&arrow-bottom>
+Ctrl --(Builder): \n12: schedule(sch) <&arrow-bottom> \n 13: status(st) <&arrow-bottom> \n 14: s = build() <&arrow-bottom>
+Builder --(Stage): \n15: <<create>> s = new Stage(sch, st) <&arrow-bottom>
+@enduml

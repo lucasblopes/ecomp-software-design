@@ -1,0 +1,13 @@
+Operação: registerActivity()
+Referências Cruzadas: Caso de uso cadastrar atividade
+Descrição: Cadastra uma nova atividade, como assembleias e reuniões
+Pré-condições:
+  - instância `regActCtrl` de `RegisterActivityCtrl` existe
+  - instância `view` de `RegisterActivityView` existe
+  - instância `mr` de `MemberRepository` existe
+  - instância `ar` de `ActivityRepository` existe
+
+Pós-condições:
+  - instância `a` de `Activity` foi criada
+  - `a` foi associada ao repositório `ar`
+

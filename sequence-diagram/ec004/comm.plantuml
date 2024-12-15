@@ -1,0 +1,20 @@
+@startuml
+rectangle User
+rectangle "regActCtrl : RegisterActivityCtrl" as Ctrl
+rectangle "view : RegisterActivityView" as View
+rectangle "mr : memberRepository" as MemberRepo
+rectangle "ar : ActivityRepository" as ActivityRepo
+rectangle "a : Activity" as Activity
+
+User --(Ctrl): \n1: registerActivity() <&arrow-bottom>
+
+Ctrl --(View): \n2: showTitle() \n3: *[duration != 0]duration = getDurationMinutes() \n4: location = getLocation() \n5: *[has next participant]participants = getParticipants() \n9: goal = getGoal() \n10: summary = getSummary() \n 17: showActivity(activity) \n 18: showSuccess() <&arrow-bottom>
+
+View --(MemberRepo): \n 6: *[name.isEmpty()]name = getInput() \n 7: m = findMember(name)\n 8: [member != null] add(m) <&arrow-bottom>
+
+Ctrl --(Activity): \n6: activity = new Activity() \n11: setDurationMinutes(durationMinutes) \n12: setLocation(location) \n13: setParticipants(participants) \n14: setGoal(goal) \n15: setSummary(summary) <&arrow-bottom>
+
+Ctrl --(ActivityRepo): \n16: addActivity(activity) <&arrow-bottom>
+
+@enduml
+ 

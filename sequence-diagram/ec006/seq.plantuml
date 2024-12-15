@@ -1,17 +1,22 @@
 @startuml
 actor User
-participant "regMemberCtrl : RegisterMemberCtrl" as Ctrl
+participant "ctrl : RegisterMemberCtrl" as Ctrl
 participant "view : RegisterMemberView" as View
 participant "repo : MemberRepository" as Repo
 participant "Member" as sMember
 participant "mb : MemberBuilder" as Builder
 participant "m : Member" as Member
 
-User -> Ctrl: registerMember
+User -> Ctrl: registerMember()
 activate Ctrl
 
 Ctrl -> View: showMemberRegistrationView()
 activate View
+deactivate View
+
+Ctrl -> View: getName()
+activate View
+View --> Ctrl: String
 deactivate View
 
 Ctrl -> View: getCpf()
@@ -112,4 +117,3 @@ else
 end
 deactivate Ctrl
 @enduml
-
