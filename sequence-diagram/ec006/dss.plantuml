@@ -1,0 +1,44 @@
+@startuml
+actor User
+participant "System" as System
+
+User -> System : registerMember()
+activate System
+
+System --> User : requestCPF()
+User -> System : provideCPF()
+
+alt Member já registrado
+    System -> User : Tela de Erro
+else Novo membro
+    System --> User : requestRG()
+    User -> System : RG
+
+    System --> User : requestEmail()
+    User -> System : Email
+
+    System --> User : requestPhone()
+    User -> System : Número de contato
+
+    System --> User : requestDepartment()
+    User -> System : Departamento
+
+    System --> User : requestCourse()
+    User -> System : Curso
+
+    System --> User : requestBirthDate()
+    User -> System : Data de nascimento
+
+    System --> User : confirmDetails()
+    User -> System : confirm()
+
+    alt Validação falhou
+        System --> User : Tela de Erro
+    else Sucesso
+        System --> User : Tela de Sucesso
+    end
+end
+
+deactivate System
+@enduml
+

@@ -1,0 +1,33 @@
+@startuml
+actor User
+participant "System" as System
+
+User -> System : registerProject()
+activate System
+
+System --> User : Tela de Cadastro de Projeto
+User -> System : Titulo
+
+alt Project already exists
+    System --> User : Projeto já existe
+else Novo título
+    User -> System : Cliente
+    User -> System : Data Inicial
+    User -> System : Data Final
+    User -> System : Descrição do Projeto
+    User -> System : Contrato
+    User -> System : Cadastra desenvolvedor
+    User -> System : confirma
+
+    alt Validação falhou
+        System --> User : Tela de erro
+    else Sucesso
+        System --> User : Tela de sucesso
+    end
+end
+
+deactivate System
+@enduml
+
+
+

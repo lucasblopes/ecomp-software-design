@@ -1,0 +1,72 @@
+@startuml
+actor User
+participant "devCtrl : DevCtrl" as DevCtrl
+participant "view : DevView" as DevView
+participant "dr : DevRepository" as DevRepository
+participant "pr : ProjectRepository" as ProjectRepository
+participant "mr : MemberRepository" as MemberRepository
+participant "dev : Dev" as Dev
+participant "p : Project" as Project
+participant "m : Member" as Member
+
+User -> DevCtrl : addDevToProject()
+activate DevCtrl
+DevCtrl -> DevView : showAddDevToProjectScreen()
+activate DevView
+deactivate DevView
+
+DevCtrl -> DevView : getDevName()
+activate DevView
+DevView --> DevCtrl : String
+deactivate DevView
+
+' Loop para obter projeto válido
+DevCtrl -> DevView : getProjName()
+activate DevView
+DevView --> DevCtrl : String 
+deactivate DevView
+
+DevCtrl -> ProjectRepository : findProject(projName)
+activate ProjectRepository
+ProjectRepository --> DevCtrl : Optional<Project>
+deactivate ProjectRepository
+
+alt Project encontrado
+    DevCtrl -> MemberRepository : findMember(memberName)
+    activate MemberRepository
+    MemberRepository --> DevCtrl : Optional<Member>
+    deactivate MemberRepository
+
+    alt Member encontrado
+        DevCtrl -> DevRepository : findDev(memberName)
+        activate DevRepository
+        DevRepository --> DevCtrl : Optional<Dev>
+        deactivate DevRepository
+
+        alt Dev não existe
+            DevCtrl -> Dev : <<create>> \n new Dev(m, projName)
+            activate Dev
+            deactivate Dev
+            DevCtrl -> DevRepository : addDev(dev)
+            activate DevRepository
+            deactivate DevRepository
+            DevCtrl -> Project : addDev(dev)
+            activate Project
+            deactivate Project
+        else Dev já existe
+            DevCtrl -> DevView : showError()
+            activate DevView
+            deactivate DevView
+        end
+    else Member não encontrado
+        DevCtrl -> DevView : showError()
+        activate DevView
+        deactivate DevView
+    end
+else Project não encontrado
+    DevCtrl -> DevView : showError()
+    activate DevView
+    deactivate DevView
+end
+deactivate DevCtrl
+@enduml
