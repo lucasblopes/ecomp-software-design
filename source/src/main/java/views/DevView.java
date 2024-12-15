@@ -21,6 +21,14 @@ public class DevView extends GenericView {
         super.showContinue();
 	}
 
+	public void showAddDevToProjectScreenAlt() {
+
+        super.clearScreen();
+        System.out.println("=== Cadastrar Desenvolvedor ===");
+        System.out.println("Nome:");
+		super.showContinue();
+	}
+
 	public void showAddIssueToDevScreen() {
 
         super.clearScreen();
