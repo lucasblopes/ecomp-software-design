@@ -9,10 +9,12 @@ public class RegisterProjectCtrl {
 
     private RegisterProjectView view;
     private ProjectRepository projectRepo;
+	private DevCtrl devCtrl;
 
-    public RegisterProjectCtrl(ProjectRepository projRepo) {
+    public RegisterProjectCtrl(ProjectRepository projRepo, DevCtrl devCtrl) {
         this.view = new RegisterProjectView();
         this.projectRepo = projRepo;
+		this.devCtrl = devCtrl;
     }
 
     // Método principal que gerencia o fluxo de cadastro
@@ -49,6 +51,11 @@ public class RegisterProjectCtrl {
 
         // Adiciona o projeto à lista
         projectRepo.addProject(project);
+
+		while(project.getDevs().size() == 0) {
+			this.devCtrl.addDevToProject(project);	
+		}
+
         view.showSuccess("Projeto " + project.getTitle() + " cadastrado com sucesso!");
     }
 }

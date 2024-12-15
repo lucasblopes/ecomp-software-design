@@ -8,10 +8,10 @@ import views.*;
 
 public class DevCtrl {
 
-    private final DevView           view;
-    private final ProjectRepository projRepo;
-    private final MemberRepository  memberRepo;
-    private final DevRepository     devRepo;
+    private DevView           view;
+    private ProjectRepository projRepo;
+    private MemberRepository  memberRepo;
+    private DevRepository     devRepo;
 
     /*
      * DevCtrl()
@@ -59,43 +59,94 @@ public class DevCtrl {
      * member exist and the member is not already a developer for the
      * project.
      *
-     * @projName: Name of the project.
-     * @memberName: Name of the member to be added as a developer.
+     * @memberName: Name of the member
+     * @proj: Project
      *
      * @throws IllegalArgumentException: If the project/member doesn't
      * exist or the member is already a developer.
      */
-    private void addDevToProject(String projName, String memberName) throws IllegalArgumentException {
+    private void addDevToProject(String memberName, Project proj) throws IllegalArgumentException {
 
         boolean failed;
 
         Dev dev;
         Optional<Member> member;
-        Optional<Project> proj;
 
-        failed = true;
-        proj = this.projRepo.findProject(projName);
-        if(!proj.isEmpty()) {
-            member = this.memberRepo.findMember(memberName);
-            if(!member.isEmpty()) {
-                /*
-		         * If there's already a Dev, we don't need to add it
-		         * again.  Otherwise, we create a new Dev object, save
-		         * it to the repository, and link it to the project.
-                 */
-                if(this.devRepo.findDev(memberName).isEmpty()) {
-                    dev = new Dev(member.get(), projName);
-                    this.devRepo.addDev(dev);
-                    proj.get().addDev(dev);
-                    failed = false;
-                }
-            }
-        }
+		failed = true;
+		member = this.memberRepo.findMember(memberName);
+		if(!member.isEmpty()) {
+			/*
+			 * If there's already a Dev, we don't need to add it
+			 * again.  Otherwise, we create a new Dev object, save
+			 * it to the repository, and link it to the project.
+			 */
+			if(this.devRepo.findDev(memberName).isEmpty()) {
+				dev = new Dev(member.get(), proj.getTitle());
+				this.devRepo.addDev(dev);
+				proj.addDev(dev);
+				failed = false;
+			}
+		}
 
         if(failed) {
-            throw new IllegalArgumentException("Failed to add developer to project.");
+            throw new IllegalArgumentException("Não foi possível adicionar desenvolvedor ao projeto.");
         }
     }
+
+    /*
+     * addDevToProject()
+     *
+     * Adds a developer (member) to a project. Ensures the project and
+     * member exist and the member is not already a developer for the
+     * project.
+     *
+     * @memberName: Name of the member
+     * @projName: Project name
+     *
+     * @throws IllegalArgumentException: If the project/member doesn't
+     * exist or the member is already a developer.
+     */
+    private void addDevToProject(String memberName, String projName) throws IllegalArgumentException {
+
+		Optional<Project> proj;
+
+		proj = this.projRepo.findProject(projName);
+        if(!proj.isEmpty()) {
+			try {
+				this.addDevToProject(memberName, proj.get());
+			} catch (IllegalArgumentException e) {
+				throw e;
+			}
+		} else {
+            throw new IllegalArgumentException("Não foi possível adicionar desenvolvedor ao projeto.");
+		}
+    }
+
+    /*
+     * addDevToProject()
+     *
+     * Orchestrates the addition of a developer to a project. This
+     * method interacts with the user to collect the
+     * member name, then validates and attempts the operation.
+	 *
+	 * @proj: Project
+     */
+	public void addDevToProject(Project proj) {
+
+		String memberName;
+
+        try {
+            this.view.showAddDevToProjectScreenAlt();
+            memberName = this.view.getDevName();
+            this.view.showConfirmation();
+            this.addDevToProject(memberName, proj);
+
+        } catch(IllegalArgumentException e) {
+            this.view.showError(e.getMessage());
+        }
+
+		this.view.showSuccess("Operação realizada com sucesso.");
+	}
 
     /*
      * addDevToProject()
@@ -104,7 +155,7 @@ public class DevCtrl {
      * method interacts with the user to collect the project name and
      * member name, then validates and attempts the operation.
      */
-    private void addDevToProject() {
+    public void addDevToProject() {
 
         String projName;
         String memberName;
@@ -114,11 +165,12 @@ public class DevCtrl {
             memberName = this.view.getDevName();
             projName = this.view.getProjName();
             this.view.showConfirmation();
-            this.addDevToProject(projName, memberName);
+            this.addDevToProject(memberName, projName);
 
         } catch(IllegalArgumentException e) {
             this.view.showError(e.getMessage());
         }
+		this.view.showSuccess("Operação realizada com sucesso.");
     }
 
     /*
@@ -146,7 +198,7 @@ public class DevCtrl {
         }
 
         if(failed) {
-            throw new IllegalArgumentException("Failed to assign issue to developer.");
+            throw new IllegalArgumentException("Não foi possível adicionar uma tarefa ao desenvolvedor.");
         }
     }
 
@@ -173,5 +225,6 @@ public class DevCtrl {
         } catch(IllegalArgumentException e) {
             this.view.showError(e.getMessage());
         }
+		this.view.showSuccess("Operação realizada com sucesso.");
     }
 }
