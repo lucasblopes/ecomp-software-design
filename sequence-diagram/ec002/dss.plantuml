@@ -1,0 +1,31 @@
+@startuml
+actor User
+participant "System" as System
+
+User -> System : registerStage()
+activate System
+
+System --> User : displayProjectList()
+User -> System : Seleciona projeto
+
+System --> User : confirmProjectSelection()
+User -> System: confirma
+
+alt Projeto encontrado
+    System --> User : requestSchedule()
+    User -> System : Schedule
+
+    System --> User : requestStatus()
+    User -> System : Status
+
+    alt Validação falhou
+        System --> User : showError()
+    else Validação bem-sucedida
+        System --> User : showSuccess()
+    end
+else Projeto não encontrado
+    System -> User : showError()
+end
+
+deactivate System
+@enduml
