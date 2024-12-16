@@ -1,0 +1,91 @@
+@startuml
+
+actor User
+participant "GenerateReportCtrl" as Ctrl
+participant "GenerateReportView" as View
+participant "ProjectRepository" as ProjRepo
+participant "ActivityRepository" as ActRepo
+
+User -> Ctrl: generateReport()
+activate Ctrl
+
+Ctrl -> View: getReportType()
+activate View
+View --> Ctrl: String ("1" ou "2")
+deactivate View
+
+Ctrl -> View: getReportDestination()
+activate View
+View --> Ctrl: String ("1" ou "2")
+deactivate View
+
+alt reportType == "1"
+    Ctrl -> Ctrl: getProjectReportContent()
+    activate Ctrl
+        Ctrl -> ProjRepo: getProjects()
+        activate ProjRepo
+        ProjRepo --> Ctrl: List<Project>
+        deactivate ProjRepo
+
+        loop para cada Project
+            Ctrl -> ActRepo: getActivities()
+            activate ActRepo
+            ActRepo --> Ctrl: List<Activity>
+            deactivate ActRepo
+        end
+    deactivate Ctrl
+
+    alt reportDestination == "1"
+        Ctrl -> View: displayReport(content)
+        activate View
+        deactivate View
+    else reportDestination == "2"
+        Ctrl -> Ctrl: saveReportToFile(content, "relatorio_projetos.pdf")
+        activate Ctrl
+        Ctrl --> Ctrl: boolean (success)
+        deactivate Ctrl
+
+        Ctrl -> View: displayFileSaveResult(success, "relatorio_projetos.pdf")
+        activate View
+        deactivate View
+    end
+
+else reportType == "2"
+    Ctrl -> Ctrl: getFinancialReportContent()
+    activate Ctrl
+        Ctrl -> ProjRepo: getProjects()
+        activate ProjRepo
+        ProjRepo --> Ctrl: List<Project>
+        deactivate ProjRepo
+
+        loop para cada Project
+            Ctrl -> ActRepo: getActivities()
+            activate ActRepo
+            ActRepo --> Ctrl: List<Activity>
+            deactivate ActRepo
+
+            loop para cada Invoice
+                Ctrl -> Ctrl: calcular total financeiro
+            end
+        end
+    deactivate Ctrl
+
+    alt reportDestination == "1"
+        Ctrl -> View: displayReport(content)
+        activate View
+        deactivate View
+    else reportDestination == "2"
+        Ctrl -> Ctrl: saveReportToFile(content, "relatorio_financeiro.pdf")
+        activate Ctrl
+        Ctrl --> Ctrl: boolean (success)
+        deactivate Ctrl
+
+        Ctrl -> View: displayFileSaveResult(success, "relatorio_financeiro.pdf")
+        activate View
+        deactivate View
+    end
+end
+
+deactivate Ctrl
+
+@enduml

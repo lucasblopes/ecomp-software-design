@@ -1,0 +1,20 @@
+Operação: generateReport()  
+Referências Cruzadas: Caso de uso gerar relatório de atividades ou prestação de contas  
+
+Descrição: Gera relatórios de projetos (com informações de atividades, etapas e desenvolvedores) ou relatórios financeiros com notas fiscais. O relatório pode ser exibido no console ou salvo como arquivo PDF.  
+
+Pré-condições:  
+  - Instância `GenerateReportCtrl` existe.  
+  - Instância `view` de `GenerateReportView` existe.  
+  - Instância `projectRepo` de `ProjectRepository` existe.  
+  - Instância `activityRepo` de `ActivityRepository` existe.  
+  - Dados de projetos e atividades estão cadastrados no sistema.  
+
+Pós-condições:  
+  - O relatório é gerado com base no tipo escolhido:  
+    - Relatório de projetos: dados dos projetos, etapas, desenvolvedores e atividades.  
+    - Relatório financeiro: dados consolidados das notas fiscais associadas às atividades.  
+  - O relatório é disponibilizado conforme a opção escolhida pelo usuário:  
+    - Exibido no console (via `view.displayReport()`).  
+    - Salvo em formato PDF no diretório padrão (via `saveReportToFile()`).  
+  - Mensagens de sucesso ou erro são apresentadas ao usuário.  

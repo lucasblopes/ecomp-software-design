@@ -1,0 +1,18 @@
+@startuml
+rectangle User
+rectangle "Ctrl : GenerateReportCtrl" as Ctrl
+rectangle "View : GenerateReportView" as View
+rectangle "ProjRepo : ProjectRepository" as ProjRepo
+rectangle "ActRepo : ActivityRepository" as ActRepo
+rectangle "Project[i] : Project" as Proji
+rectangle "Activity[i] : Activity" as Acti
+
+User --(Ctrl): \n1: generateReport() <&arrow-bottom>
+Ctrl --(View): \n2: reportType = getReportType() <&arrow-bottom>\n4: reportDestination = getReportDestination() <&arrow-bottom>\n6: [reportDestination == '1'] displayReport(content) <&arrow-bottom>\n8: [reportDestination == '2'] displayFileSaveResult(success, filePath) <&arrow-bottom>
+Ctrl --(ProjRepo): \n3: projects = getProjects() <&arrow-bottom>
+ProjRepo --(Proji): \n3.1: [for each Project] <&arrow-bottom>
+Ctrl --(ActRepo): \n5: activities = getActivities() <&arrow-bottom>
+ActRepo --(Acti): \n5.1: [for each Activity] <&arrow-bottom>
+Ctrl --(Ctrl): \n7: [reportType == '1'] getProjectReportContent() <&arrow-bottom>\n9: [reportType == '2'] getFinancialReportContent() <&arrow-bottom>
+Ctrl --(Ctrl): \n10: [reportDestination == '2'] saveReportToFile(content, filePath) <&arrow-bottom>
+@enduml

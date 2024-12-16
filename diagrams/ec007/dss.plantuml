@@ -1,0 +1,17 @@
+@startuml
+actor User
+participant "System" as System
+
+User -> System : Solicita geração de relatório
+System -> User : Apresenta opções de tipo de relatório (Projetos ou Financeiro)
+User -> System : Escolhe tipo de relatório
+
+System -> User : Apresenta opções de destino do relatório (Visualizar ou Salvar)
+User -> System : Escolhe destino do relatório
+
+alt Relatório gerado com sucesso
+    System -> User : Exibe relatório ou confirma salvamento
+else Erro na geração ou salvamento
+    System -> User : Notifica falha na operação
+end
+@enduml
