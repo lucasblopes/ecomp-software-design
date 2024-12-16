@@ -1,0 +1,24 @@
+@startuml
+rectangle Adm_Fin
+rectangle "ctrl : RegisterInvoiceCtrl" as Ctrl
+rectangle "view : RegisterInvoiceView" as View
+rectangle "pr : ProjectRepository" as Pr
+rectangle "ar : ActivityRepository" as Ar
+rectangle "p : Project" as Proj
+rectangle "a : Activity" as Act
+rectangle "i : Invoice" as Invoice
+rectangle ":proj[i] : Project" as Proji
+rectangle ":act[i] : Activity" as Acti
+
+Adm_Fin --(Ctrl): \n1:registerInvoice() <&arrow-bottom>
+Ctrl --(View): \n2:choice = showChoice() <&arrow-bottom>\n3: [choice == 'Project'] showProjects(pr) <&arrow-bottom>\n5: projName = selectProjects(pr) <&arrow-bottom>\n7: [choice == 'Activity'] showActivities(ar) <&arrow-bottom>\n9 actName = selectActivities(ar) <&arrow-bottom>\n11: event == null ? showError() <&arrow-bottom>\n12: type = getType() <&arrow-bottom>\n13: value = getValue() <&arrow-bottom>\n14: date = getDate() <&arrow-bottom>\n18: [Invoice OK] showSuccess() <&arrow-bottom>\n19: [Invoice not OK] showError()
+View --(Pr): \n4:projList = getProjects() <&arrow-bottom>
+View --(Ar): \n8:actList = getActivities() <&arrow-bottom>
+Ctrl --(Pr): \n6:event = findProject(projName) <&arrow-bottom>
+Pr --(Proji): \n6.1: *[projName == proj[i].getTitle()] p = proj[i] <&arrow-bottom>
+Ctrl --(Ar): \n10:event = findActivity(actName) <&arrow-bottom>
+Ar --(Acti): \n10.1: *[actName == act[i].getName()] act = act[i] <&arrow-bottom>
+Ctrl --(Proj): \n16:[event instanceof Project] addInvoice(i) <&arrow-bottom>
+Ctrl --(Act): \n17:[event instanceof Activity] addInvoice(i) <&arrow-bottom>
+Ctrl --(Invoice): \n15: <<create>> i = new Invoice(type, value, date) <&arrow-bottom>
+@enduml

@@ -1,0 +1,38 @@
+@startuml
+actor Adm_Fin
+participant "System" as System
+
+Adm_Fin -> System : registerInvoice()
+activate System
+
+System -> Adm_Fin : Tela de escolha (projetos ou Atividade)
+Adm_Fin -> System : Escolha (projetos ou Atividade)
+
+alt projetos escolhido
+    System -> Adm_Fin : Mostrar projetos disponíveis
+    Adm_Fin -> System : Seleciona projeto
+    System -> Adm_Fin : Exibir detalhes do projeto
+    Adm_Fin -> System : Confirmar escolha
+    System -> Adm_Fin : Solicitar dados da nota fiscal (tipo, valor, data)
+    Adm_Fin -> System : Envia dados da nota fiscal
+    alt Validação falha
+        System -> Adm_Fin : Tela de erro (nota fiscal inválida)
+    else Validação bem-sucedida
+        System -> Adm_Fin : Tela de sucesso (nota fiscal registrada)
+    end
+else Atividade escolhida
+    System -> Adm_Fin : Mostrar atividades disponíveis
+    Adm_Fin -> System : Seleciona atividade
+    System -> Adm_Fin : Exibir detalhes da atividade
+    Adm_Fin -> System : Confirmar escolha
+    System -> Adm_Fin : Solicitar dados da nota fiscal (tipo, valor, data)
+    Adm_Fin -> System : Envia dados da nota fiscal
+    alt Validação falha
+        System -> Adm_Fin : Tela de erro (nota fiscal inválida)
+    else Validação bem-sucedida
+        System -> Adm_Fin : Tela de sucesso (nota fiscal registrada)
+    end
+end
+
+deactivate System
+@enduml
