@@ -73,7 +73,7 @@ public class DevCtrl {
         Optional<Member> member;
 
 		failed = true;
-		member = this.memberRepo.findMember(memberName);
+		member = this.memberRepo.findMemberByName(memberName);
 		if(!member.isEmpty()) {
 			/*
 			 * If there's already a Dev, we don't need to add it
