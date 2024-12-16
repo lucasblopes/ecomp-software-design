@@ -28,13 +28,13 @@ public class EcompCtrl {
 		this.devRepo = new DevRepository();
 
 		// Inicialização dos controladores
-		this.regProjCtrl = new RegisterProjectCtrl(this.projRepo, this.devCtrl);
 		this.stageCtrl = new RegisterStageCtrl(this.projRepo);
 		this.activityCtrl = new RegisterActivityCtrl(this.activityRepo, this.memberRepo);
 		this.memberCtrl = new RegisterMemberCtrl(this.memberRepo);
 		this.invoiceCtrl = new RegisterInvoiceCtrl(this.projRepo, this.activityRepo);
 		this.genRepCtrl = new GenerateReportCtrl(this.projRepo, this.activityRepo);
 		this.devCtrl = new DevCtrl(this.projRepo, this.memberRepo, this.devRepo);
+		this.regProjCtrl = new RegisterProjectCtrl(this.projRepo, this.devCtrl);
 	}
 
 	public void start() {
