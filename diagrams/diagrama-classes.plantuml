@@ -7,6 +7,22 @@ class Activity {
     - String summary
     + Activity()
     + Activity(int, String, List<String>, String, String)
+    + String getName()
+    + void setName(String)
+    + int getDurationMinutes()
+    + void setDurationMinutes(int)
+    + String getLocation()
+    + void setLocation(String)
+    + List<String> getParticipants()
+    + void setParticipants(List<String>)
+    + List<Invoices> getInvoices()
+    + void setInvoices(List<Invoices>)
+    + String getGoal()
+    + void setGoal(String)
+    + String getSummary()
+    + void setSummary(String)
+    + void addInvoice(Invoice)
+    + String toString()
 }
 
 class Dev {
@@ -15,6 +31,9 @@ class Dev {
     - Map<String, Integer> issues
     + Dev(Member, String)
     + void addIssue(String, int)
+    + void setIssues(Map<String, Integer> issues)
+    + Member getMember()
+    + Map<String, Integer> getIssues()
 }
 
 class Member {
@@ -28,6 +47,38 @@ class Member {
     - String course
     - LocalDate birthDate
     + static MemberBuilder builder()
+    + void printMember()
+    + List<String> validateFields()
+    + String getName()
+    + String getCPF()
+    + String getEmail()
+    + String getPhone()
+    + String getPosition()
+    + String getDepartment()
+    + String getCourse()
+    + LocalDate getBirthDate()
+}
+
+class MemberBuilder {
+    - String name
+    - String cpf
+    - String rg
+    - String email
+    - String phone
+    - String position
+    - String department
+    - String course
+    - LocalDate birthDate
+    + Member build()
+    + MemberBuilder name(String)
+    + MemberBuilder cpf(String)
+    + MemberBuilder rg(String)
+    + MemberBuilder email(String)
+    + MemberBuilder phone(String)
+    + MemberBuilder position(String)
+    + MemberBuilder department(String)
+    + MemberBuilder course(String)
+    + MemberBuilder birthDate(LocalDate)
 }
 
 class Project {
@@ -39,63 +90,156 @@ class Project {
     - String contractPDF
     - List<Stage> stages
     - List<Dev> devs
+    - List<Invoice> invoices;
     + static ProjectBuilder builder()
+    + String getTitle()
+    + String getClient()
+    + LocalDate getStartDate()
+    + LocalDate getDeliveryDeadline()
+    + String getDescription()
+    + String getContractPDF()
+    + List<Stage> getStages()
+    + List<Dev> getDevs()
+    + List<Invoices> getInvoices()
+    + void addDev(Dev)
+    + void addStage(Stage)
+    + void addInvoice(Invoice)
+    + List<String> validateFields()
+    + String toString()
+}
+
+class ProjectBuilder {
+    - String title
+    - String client
+    - LocalDate startDate
+    - LocalDate deliveryDeadline
+    - String description
+    - String contractPDF
+    - List<Stage> stages
+    - List<Dev> devs
+    - List<Invoice> invoices;
+    + ProjectBuilder()
+    + ProjectBuilder title(String)
+    + ProjectBuilder client(String)
+    + ProjectBuilder startDate(LocalDate)
+    + ProjectBuilder deliveryDeadline(LocalDate)
+    + ProjectBuilder description(String)
+    + ProjectBuilder contractPDF(String)
+    + ProjectBuilder stages(List<Stage>)
+    + ProjectBuilder devs(List<Dev> devs)
+    + ProjectBuilder invoices(List<Invoice> invoices)
+    + Project build()
 }
 
 class Stage {
     - String schedule
     - String status
+    + Stage(String, String)
     + static StageBuilder builder()
+    + String getSchedule()
+    + String getStatus()
+    + void setStatus(String)
+    + void setSchedule(String)
+    + List<String> validateFields()
+}
+
+class StageBuilder {
+    - String schedule
+    - String status
+    - StageBuilder()
+    + Stage build()
+    + StageBuilder schedule(String)
+    + StageBuilder status(String)
 }
 
 class ActivityRepository {
     - List<Activity> activities
+    + ActivityRepository()
     + void addActivity(Activity)
+    + void setActivities(List<Activity>)
+    + void removeActivity(Activity)
+    + Optional<Activity> findActivity(String)
+    + List<Activity> getActivities()
 }
 
 class DevRepository {
     - List<Dev> devs
+    + DevRepository()
     + void addDev(Dev)
+    + void setDevs(List<Dev>)
+    + List<Dev> getDevs()
+    + Optional<Dev> findDev(String)
 }
 
 class MemberRepository {
     - List<Member> members
     + void addMember(Member)
+    + MemberRepository()
+    + List<Member> getMembers()
+    + void setMembers(List<Member>)
+    + void removeMember(Member)
+    + Optional<Member> findMemberByName(String name)
+    + Optional<Member> findMemberByCPF(String)
 }
 
 class ProjectRepository {
     - List<Project> projects
     + void addProject(Project)
+    + ProjectRepository()
+    + List<Project> getProjects()
+    + void setProjects(List<Project>)
+    + void removeProject(Project)
+    + Optional<Project> findProject(String)
 }
 
 class GenericView {
     - Scanner scanner
     + String getInput()
+    + int getInputInt()
+    + void showError()
+    + void showSuccess()
+    + void showConfirmation()
+    + void showContinue()
+    + void clearScreen()
 }
 
 class DevView {
     + void showManageScreen()
+    + void showAddDevToProjectScreen()
+    + void showAddIssueToDevScreen()
+    + String getDevName()
+    + String getProjName()
+    + String getIssue()
+    + int getHours()
 }
+
 class EcompView {
     + void showMenu()
 }
 
 class RegisterActivityView {
     + void showTitle()
-}
-
-class GenerateReportView {
-    + void showTitle()
-}
-
-class RegisterInvoiceView {
-    + void showTitle()
+    + String getName()
+    + int getDurationMinutes()
+    + String getLocation()
+    + List<String> getParticipants()
+    + String getGoal()
+    + String getSummary()
+    + void printActivity()
 }
 
 class RegisterMemberView {
     + void showMemberRegistrationScreen()
     + String getName()
     + String getCPF()
+    + String getRG()
+    + String getEmail()
+    + String getPhone()
+    + String getPosition()
+    + String getDepartment()
+    + String getCourse()
+    + LocalDate getBirthDate()
+    + void showTitle()
 }
 
 class RegisterProjectView {
@@ -116,6 +260,10 @@ class DevCtrl {
     - DevRepository devRepo
     + void manage()
     + void addDevToProject()
+    - void addDevToProject(String, Project)
+    - void addDevToProject(String, String)
+    - void addIssueToDev()
+    - void addIssueToDev(String, String, int)
 }
 
 class EcompCtrl {
@@ -131,20 +279,22 @@ class EcompCtrl {
     - RegisterMemberCtrl memberCtrl
     - GenerateReportCtrl genRepCtrl
     - DevCtrl devCtrl
+    + EcompCtrl()
     + void start()
-}
-
-class GenerateReportCtrl {
-    + void generateReport()
 }
 
 class RegisterActivityCtrl {
     - ActivityRepository activityRepo
     - MemberRepository memberRepo
+    + RegisterActivityCtrl(ActivityRepository, MemberRepository)
     + void registerActivity()
 }
 
 class RegisterInvoiceCtrl {
+    - RegisterInvoiceView view
+    - ProjectRepository projectRepo
+    - ActivityRepository activityRepo
+    + RegisterInvoiceCtrl(ProjectRepository, ActivityRepository)
     + void registerInvoice()
 }
 
@@ -158,12 +308,14 @@ class RegisterProjectCtrl {
     - RegisterProjectView view
     - ProjectRepository projectRepo
     - DevCtrl devCtrl
+    + RegisterProjectCtrl(ProjectRepository, DevCtrl)
     + void registerProject()
 }
 
 class RegisterStageCtrl {
     - RegisterStageView view
     - ProjectRepository projectRepo
+    + RegisterStageCtrl(ProjectRepository)
     + void registerStage()
 }
 
@@ -175,6 +327,7 @@ class GenerateReportCtrl {
     - ProjectRepository projectRepo
     - ActivityRepository activityRepo
     - GenerateReportView view
+    + GenerateReportCtrl(ProjectRepository, ActivityRepository)
     + void generateReport()
     - String getProjectReportContent()
     - String getFinancialReportContent()
@@ -334,5 +487,20 @@ GenerateReportCtrl ..> Activity : "<<local>>"
 GenerateReportCtrl ..> Project : "<<local>>"
 GenerateReportCtrl ..> Dev : "<<local>>"
 GenerateReportCtrl ..> Member : "<<local>>"
+
+Project --> ProjectBuilder : "<<create>>"
+ProjectBuilder --> Project : "<<creates>>"
+ProjectBuilder "1" *--> "0..*" Stage : "manages"
+ProjectBuilder "1" *--> "0..*" Dev : "manages"
+ProjectBuilder "1" *--> "0..*" Invoice : "manages"
+
+Stage --> StageBuilder : "<<create>>"
+StageBuilder --> Stage : "<<create>>"
+
+Member --> MemberBuilder : "<<create>>"
+MemberBuilder --> Member : "<<create>>"
+
+RegisterInvoiceView ..> ProjectRepository : "<<parâmetro>>"
+RegisterInvoiceView ..> ActivityRepository : "<<parâmetro>>"
 
 @enduml
