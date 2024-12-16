@@ -46,6 +46,7 @@ class Member {
     - String department
     - String course
     - LocalDate birthDate
+    - Member(String, String, String, String, String, String, String, String, LocalDate)
     + static MemberBuilder builder()
     + void printMember()
     + List<String> validateFields()
@@ -69,6 +70,7 @@ class MemberBuilder {
     - String department
     - String course
     - LocalDate birthDate
+    + MemberBuilder()
     + Member build()
     + MemberBuilder name(String)
     + MemberBuilder cpf(String)
@@ -91,6 +93,7 @@ class Project {
     - List<Stage> stages
     - List<Dev> devs
     - List<Invoice> invoices;
+    - Project(String, String, LocalDate, LocalDate, String, String, List<Stage>, List<Dev>, List<Invoice>)
     + static ProjectBuilder builder()
     + String getTitle()
     + String getClient()
@@ -246,11 +249,20 @@ class RegisterProjectView {
     + void showProjectRegistrationScreen()
     + String getTitle()
     + String getClient()
+    + LocalDate getInitialDate()
+    + LocalDate getDeliveryDeadline()
+    + String getDescription()
+    + String getPDFContractPath()
+    + void showImportedContractScreen(String)
+    + void showTitle()
 }
 
 class RegisterStageView {
-    + void showProjects(ProjectRepository)
+    + boolean showProjects(ProjectRepository)
     + String selectProject()
+    + String getSchedule()
+    + String getStatus()
+    + void showTitle()
 }
 
 class DevCtrl {
@@ -258,6 +270,7 @@ class DevCtrl {
     - ProjectRepository projRepo
     - MemberRepository memberRepo
     - DevRepository devRepo
+    + DevCtrl(ProjectRepository, MemberRepository, DevRepository)
     + void manage()
     + void addDevToProject()
     - void addDevToProject(String, Project)
@@ -301,6 +314,7 @@ class RegisterInvoiceCtrl {
 class RegisterMemberCtrl {
     - RegisterMemberView view
     - MemberRepository memberRepo
+    + RegisterMemberCtrl(MemberRepository)
     + void registerMember()
 }
 
@@ -338,6 +352,7 @@ class RegisterInvoiceCtrl {
     - RegisterInvoiceView view
     - ProjectRepository projectRepo
     - ActivityRepository activityRepo
+    + RegisterInvoiceCtrl(ProjectRepository, ActivityRepository)
     + void registerInvoice()
 }
 
