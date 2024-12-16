@@ -1,0 +1,32 @@
+@startuml
+actor User
+participant "System" as System
+
+User -> System : addDevToProject()
+activate System
+
+System --> User : requestDevName()
+User -> System : Nome do Ecomper
+
+System --> User : requestProjectName()
+User -> System : Nome do Projeto
+
+alt Project encontrado
+    alt Member encontrado
+        alt Dev não existe
+            System --> User : confirmDevCreation()
+            User -> System : confirm()
+
+            System --> User : Tela de Sucesso
+        else Dev já existe
+            System --> User : Tela de Erro
+        end
+    else Member não encontrado
+        System --> User : Tela de Erro
+    end
+else Project não encontrado
+    System --> User : Tela de Erro
+end
+
+deactivate System
+@enduml

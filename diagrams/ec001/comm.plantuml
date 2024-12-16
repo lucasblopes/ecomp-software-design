@@ -1,0 +1,21 @@
+@startuml
+rectangle User
+rectangle "ctrl : RegisterRegisterCtrl" as Ctrl
+rectangle "devCtrl : DevCtrl" as DevCtrl
+rectangle "view : RegisterRegisterView" as View
+rectangle "p : Project" as P
+rectangle "pr : ProjectRepository" as Pr
+rectangle "pb : ProjectBuilder" as Builder
+
+User --(Ctrl): \n1:registerProject() <&arrow-bottom>
+Ctrl --(View): \n2:showProjectRegistrationScreen()<&arrow-bottom>\n3:title = getTitle()<&arrow-bottom>
+Ctrl --(Pr): \n4:p = findProject(title) <&arrow-bottom>
+Ctrl --(View): \n5:client = getClient()<&arrow-bottom>\n6:startDate = getInitialDate()<&arrow-bottom>\n7:deliveryDeadline = getDeliveryDeadline()<&arrow-bottom>\n8:description = getDescription()<&arrow-bottom>\n9:showConfirmation()<&arrow-bottom>\n10:contractPDF = getPDFContractPath()<&arrow-bottom>
+
+Ctrl --(Project): \n11: <<static>> pb = builder() <&arrow-bottom>
+Builder --(Project): \n12: <<create>> p = new Project(attr) <&arrow-bottom>
+Ctrl --(Builder): \n13: title(title) <&arrow-bottom>\n14: client(client) <&arrow-bottom>\n15: startDate(startDate) <&arrow-bottom>\n16: deliveryDeadline(deliveryDeadline) <&arrow-bottom>\n17: description(description) <&arrow-bottom>\n18: build() <&arrow-bottom>
+
+Ctrl --(ProjectRepository): \n19:[validação OK] addProject(p) <&arrow-bottom>
+Ctrl --(DevCtrl): \n20:[while p não tem devs associados] addDevProject(p) <&arrow-bottom>
+@enduml

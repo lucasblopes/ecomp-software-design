@@ -1,0 +1,171 @@
+@startuml
+actor User
+participant "regProjCtrl : RegisterProjectCtrl" as RegisterProjectCtrl
+participant "view : RegisterProjectView" as RegisterProjectView
+participant "repo : ProjectRepository" as ProjectRepository
+participant Project
+participant "pb : ProjectBuilder" as ProjectBuilder
+participant "p : Project" as Proj
+participant "devCtrl : DevCtrl" as DevCtrl
+
+User -> RegisterProjectCtrl : registerProject()
+activate RegisterProjectCtrl
+
+RegisterProjectCtrl -> RegisterProjectView : showProjectRegistrationScreen()
+activate RegisterProjectView
+deactivate RegisterProjectView
+
+loop while title == null || title.isEmpty()
+RegisterProjectCtrl -> RegisterProjectView : getTitle()
+activate RegisterProjectView
+  alt title == null
+    RegisterProjectView -> RegisterProjectView : showError()
+    activate RegisterProjectView
+    deactivate RegisterProjectView
+  end
+RegisterProjectView --> RegisterProjectCtrl : String
+deactivate RegisterProjectView
+end
+
+
+RegisterProjectCtrl -> ProjectRepository : findProject(title)
+activate ProjectRepository
+ProjectRepository --> RegisterProjectCtrl : Optional<Project>
+deactivate ProjectRepository
+
+alt Project já existe
+    RegisterProjectCtrl -> RegisterProjectView : showError()
+    activate RegisterProjectView
+    deactivate RegisterProjectView
+else Novo título
+
+    loop while client == null || client.isEmpty()
+    RegisterProjectCtrl -> RegisterProjectView : getClient()
+    activate RegisterProjectView
+      alt client == null
+        RegisterProjectView -> RegisterProjectView : showError()
+        activate RegisterProjectView
+        deactivate RegisterProjectView
+      end
+    RegisterProjectView --> RegisterProjectCtrl : String
+    deactivate RegisterProjectView
+    end
+
+
+    loop while initialDate == null
+        RegisterProjectCtrl -> RegisterProjectView : getInitialDate()
+        activate RegisterProjectView
+        alt date == null
+          RegisterProjectView -> RegisterProjectView : showError()
+          activate RegisterProjectView
+          deactivate RegisterProjectView
+        end
+    RegisterProjectView --> RegisterProjectCtrl : LocalDate
+    deactivate RegisterProjectView
+    end
+
+
+
+    loop while deliveryDeadline == null
+    RegisterProjectCtrl -> RegisterProjectView : getDeliveryDeadline()
+    activate RegisterProjectView
+            alt deadline == null
+          RegisterProjectView -> RegisterProjectView : showError()
+          activate RegisterProjectView
+          deactivate RegisterProjectView
+        end
+    RegisterProjectView --> RegisterProjectCtrl : LocalDate
+    deactivate RegisterProjectView
+    end
+
+
+
+    loop while description == null || description.isEmpty()
+      RegisterProjectCtrl -> RegisterProjectView : getDescription()
+      activate RegisterProjectView
+        alt descriprion == null
+          RegisterProjectView -> RegisterProjectView : showError()
+          activate RegisterProjectView
+          deactivate RegisterProjectView
+        end
+    RegisterProjectView --> RegisterProjectCtrl : String
+    deactivate RegisterProjectView
+    end
+
+
+    RegisterProjectCtrl -> RegisterProjectView : showConfirmation()
+    activate RegisterProjectView
+    deactivate RegisterProjectView
+
+    loop if path.isEmpty()
+    RegisterProjectCtrl -> RegisterProjectView : getPDFContractPath()
+    activate RegisterProjectView
+            alt path == null
+          RegisterProjectView -> RegisterProjectView : showError()
+          activate RegisterProjectView
+          deactivate RegisterProjectView
+        end
+    RegisterProjectView --> RegisterProjectCtrl : String
+    deactivate RegisterProjectView
+    end
+
+
+    RegisterProjectCtrl -> Project : <<static>> \n builder()
+    activate Project
+    Project -> ProjectBuilder: <<create>> \n  new ProjectBuilder()
+    activate ProjectBuilder
+    ProjectBuilder --> Project: ProjectBuilder
+    deactivate ProjectBuilder
+    Project --> RegisterProjectCtrl : ProjectBuilder
+    deactivate Project
+
+    RegisterProjectCtrl -> ProjectBuilder : title(String)
+    activate ProjectBuilder
+    deactivate ProjectBuilder
+
+    RegisterProjectCtrl -> ProjectBuilder : client(String)
+    activate ProjectBuilder
+    deactivate ProjectBuilder
+
+    RegisterProjectCtrl -> ProjectBuilder : startDate(LocalDate)
+    activate ProjectBuilder
+    deactivate ProjectBuilder
+
+    RegisterProjectCtrl -> ProjectBuilder : deliveryDeadline(LocalDate)
+    activate ProjectBuilder
+    deactivate ProjectBuilder
+
+    RegisterProjectCtrl -> ProjectBuilder : description(String)
+    activate ProjectBuilder
+    deactivate ProjectBuilder
+
+    RegisterProjectCtrl -> ProjectBuilder : contractPDF(String)
+    activate ProjectBuilder
+    deactivate ProjectBuilder
+
+    RegisterProjectCtrl -> ProjectBuilder : build()
+    activate ProjectBuilder
+    ProjectBuilder -> Proj : <<create>> \n new Project()
+    activate Proj
+    Proj --> ProjectBuilder : Project
+    deactivate Proj
+    ProjectBuilder --> RegisterProjectCtrl : Project
+    deactivate ProjectBuilder
+
+    alt Validação falhou
+        RegisterProjectCtrl -> RegisterProjectView : showError()
+        activate RegisterProjectView
+        deactivate RegisterProjectView
+    else Sucesso
+        RegisterProjectCtrl -> ProjectRepository : addProject(p)
+        activate ProjectRepository
+        deactivate ProjectRepository
+        loop while p não tem desenvolvedores associados
+        RegisterProjectCtrl -> DevCtrl : addDevToProject(p)
+        activate DevCtrl
+        deactivate DevCtrl
+        end
+    end
+end
+deactivate RegisterProjectCtrl
+@enduml

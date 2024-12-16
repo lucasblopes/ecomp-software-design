@@ -1,0 +1,15 @@
+Operação: addDevToProject()
+Referências Cruzadas: Caso de uso cadastrar desenvolvedor de algum projeto
+Descrição: Adiciona um desenvolvedor a um projeto
+Pré-condições:
+  - instância `devCtrl` de `DevCtrl` existe
+  - instância `view` de `DevView` existe
+  - instância `dr` de `DevRepository` existe
+  - instância `mr` de `MemberRepository` existe
+  - instância `pr` de `ProjectRepository` existe
+  - projeto `p` existe
+
+Pós-condições:
+  - instância `dev` de `Dev` foi criada
+  - `dev` foi adicionado ao repositório `dr`
+  - `dev` foi atribuído ao projeto `p`

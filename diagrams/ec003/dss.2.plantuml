@@ -1,0 +1,36 @@
+@startuml
+actor User
+participant "System" as System
+
+User -> System : addIssueToDev()
+activate System
+
+System --> User : requestDevName()
+User -> System : Nome do Dev
+
+loop while name == null || name.isEmpty()
+    System --> User : displayError("String invalido")
+    System --> User : Nome do Dev
+    User -> System : provideDevName()
+end
+
+System --> User : requestIssue()
+User -> System : Tarefa
+
+loop while issue == null || issue.isEmpty()
+    System --> User : displayError("String invalida")
+    System --> User : requestIssue()
+    User -> System : Tarefa
+end
+
+System --> User : requestHours()
+User -> System : Horas trabalhadas
+
+alt Dev encontrado
+    System --> User : issueAddedSuccessfully()
+else Dev não encontrado
+    System --> User : displayError("Dev nao foi encontrado")
+end
+
+deactivate System
+@enduml

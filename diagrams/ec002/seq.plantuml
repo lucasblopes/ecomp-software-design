@@ -1,0 +1,95 @@
+@startuml
+actor User
+participant "ctrl : RegisterStageCtrl" as Ctrl
+participant "view : RegisterStageView" as View
+participant "pr : ProjectRepository" as Repo
+participant "p : Project" as Project
+participant "Stage" as St
+participant "sb : StageBuilder" as Builder
+participant "s : Stage" as Stage
+
+User -> Ctrl: registerStage()
+activate Ctrl
+
+Ctrl -> View: showProjects(Repo)
+activate View
+View -> Repo: getProjects()
+activate Repo
+Repo --> View: List<Project>
+deactivate Repo
+deactivate View
+
+Ctrl -> View: selectProject() : String
+activate View
+
+View --> Ctrl: String
+deactivate View
+
+Ctrl -> Repo: findProject(String) : Optional<Project>
+activate Repo
+Repo --> Ctrl: Optional<Project>
+deactivate Repo
+
+alt Projeto encontrado
+    Ctrl -> Project: printProject()
+    activate Project
+    deactivate Project
+
+    Ctrl -> View: getSchedule() : String
+    activate View
+    View --> Ctrl: String
+    deactivate View
+
+    Ctrl -> View: getStatus() : String
+    activate View
+    View --> Ctrl: String
+    deactivate View
+  
+    Ctrl -> St : <<static>> \n builder()
+    activate St
+    St -> Builder : <<create>> \n new Builder()
+    activate Builder
+    Builder --> St: StageBuilder
+    deactivate Builder
+    St --> Ctrl: StageBuilder
+    deactivate St
+    
+    Ctrl -> Builder: schedule(String)
+    activate Builder
+    deactivate Builder
+
+    Ctrl -> Builder: status(String)
+    activate Builder
+    deactivate Builder
+    
+    Ctrl -> Builder: build()
+    activate Builder
+    Builder -> Stage: <<create>> \n new Stage()
+    activate Stage
+    Stage --> Builder: Stage
+    deactivate Stage
+    Builder --> Ctrl: Stage
+    deactivate Builder
+
+    alt Validação do Stage falhou
+        Ctrl -> View: showError(String)
+        activate View
+        deactivate View
+    else
+      Ctrl -> Project: addStage(Stage)
+      activate Project
+      deactivate Project
+
+      Ctrl -> View: showSuccess(String)
+      activate View
+      deactivate View
+    end
+
+else Projeto não encontrado
+    Ctrl -> View: showError(String)
+    activate View
+    deactivate View
+end
+
+deactivate Ctrl
+@enduml

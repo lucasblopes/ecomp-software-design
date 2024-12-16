@@ -1,0 +1,119 @@
+@startuml
+actor User
+participant "ctrl : RegisterMemberCtrl" as Ctrl
+participant "view : RegisterMemberView" as View
+participant "repo : MemberRepository" as Repo
+participant "Member" as sMember
+participant "mb : MemberBuilder" as Builder
+participant "m : Member" as Member
+
+User -> Ctrl: registerMember()
+activate Ctrl
+
+Ctrl -> View: showMemberRegistrationView()
+activate View
+deactivate View
+
+Ctrl -> View: getName()
+activate View
+View --> Ctrl: String
+deactivate View
+
+Ctrl -> View: getCpf()
+activate View
+View --> Ctrl: String
+deactivate View
+
+Ctrl -> Repo: findMember()
+activate Repo
+Repo --> Ctrl: Member
+deactivate Repo
+alt member == null
+  Ctrl -> View: getRG()
+  activate View
+  View --> Ctrl: String
+  deactivate View
+    Ctrl -> View: getEmail()
+  activate View
+  View --> Ctrl: String
+  deactivate View
+    Ctrl -> View: getPhone()
+  activate View
+  View --> Ctrl: String
+  deactivate View
+    Ctrl -> View: getDepartment()
+  activate View
+  View --> Ctrl: String
+  deactivate View
+  Ctrl -> View: getCourse()
+  activate View
+  View --> Ctrl: String
+  deactivate View
+  Ctrl -> View: getBirthDate()
+  activate View
+  View --> Ctrl: LocalDate
+  deactivate View
+  Ctrl -> View: showConfirmation()
+  activate View
+  deactivate View
+  
+  Ctrl -> sMember: <<static>> \n builder()
+  activate sMember 
+  sMember -> Builder: <<create>> \n new MemberBuilder()
+  activate Builder
+  Builder --> sMember: Member
+  deactivate Builder
+  sMember --> Ctrl: MemberBuilder
+  deactivate sMember
+  Ctrl -> Builder: name(name)
+  activate Builder
+  deactivate Builder
+  Ctrl -> Builder: rg(rg)
+  activate Builder
+  deactivate Builder
+  Ctrl -> Builder: email(email)
+  activate Builder
+  deactivate Builder
+  Ctrl -> Builder: phone(phone)
+  activate Builder
+  deactivate Builder
+    Ctrl -> Builder: position(position)
+  activate Builder
+  deactivate Builder
+    Ctrl -> Builder: department(department)
+  activate Builder
+  deactivate Builder
+    Ctrl -> Builder: course(course)
+  activate Builder
+  deactivate Builder
+    Ctrl -> Builder: birthDate(birthDate)
+  activate Builder
+  deactivate Builder
+  Ctrl -> Builder: build()
+  activate Builder
+  Builder -> Member: <<create>> \n new Member()
+  activate Member
+  Member --> Builder: Member
+  deactivate Member
+  Builder --> Ctrl: Member
+  deactivate Builder
+  
+  alt member != null
+    Ctrl -> Repo: addRepo(m)
+    activate Repo
+    deactivate Repo
+    Ctrl -> View: showSuccess()
+    activate View
+    deactivate View
+  else
+    Ctrl -> View: showError()
+    activate View
+    deactivate View
+  end
+else
+  Ctrl -> View: showError()
+  activate View
+  deactivate View
+end
+deactivate Ctrl
+@enduml
