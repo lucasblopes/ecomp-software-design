@@ -236,10 +236,6 @@ Main --> EcompCtrl : "uses"
 Main ..> EcompCtrl : <<local>>
 
 RegisterInvoiceCtrl ..> RegisterInvoiceView : <<local>>
-RegisterInvoiceCtrl ..> ProjectRepository : <<parâmetro>>
-RegisterInvoiceCtrl ..> ActivityRepository : <<parâmetro>>
-
-GenerateReportCtrl ..> GenerateReportView : <<local>>
 
 RegisterInvoiceView ..> ProjectRepository : <<parâmetro>>
 RegisterInvoiceView ..> ActivityRepository : <<parâmetro>>
@@ -278,7 +274,7 @@ EcompCtrl *--> EcompView : "uses"
 
 DevCtrl *--> DevRepository : "uses"
 DevCtrl *--> ProjectRepository : "uses"
-DevCtrl *--> MemberRepository : "uses"mv 
+DevCtrl *--> MemberRepository : "uses" 
 DevCtrl *--> DevView : "uses"
 
 RegisterActivityCtrl *--> ActivityRepository : "uses"
@@ -317,15 +313,26 @@ RegisterInvoiceCtrl *--> RegisterInvoiceView
 RegisterInvoiceCtrl *--> ProjectRepository
 RegisterInvoiceCtrl *--> ActivityRepository
 
-GenerateReportCtrl *--> ProjectRepo : "uses"
-GenerateReportCtrl *--> ActivityRepo : "uses"
-GenerateReportView *--> GenerateReportView : "uses"
+RegisterInvoiceCtrl --> Invoice : "uses"
+RegisterInvoiceCtrl --> Activity : "uses"
+RegisterInvoiceCtrl --> Project : "uses"
 
-GenerateReprotView ..> State : "<<local>>"
-GenerateReprotView ..> Activity : "<<local>>"
-GenerateReprotView ..> Project : "<<local>>"
-GenerateReprotView ..> Dev : "<<local>>"
-GenerateReprotView ..> Member : "<<local>>"
+RegisterInvoiceCtrl ..> Invoice : "<<local>>"
+RegisterInvoiceCtrl ..> Activity : "<<local>>"
+RegisterInvoiceCtrl ..> Project : "<<local>>"
+
+GenerateReportCtrl *--> ProjectRepository : "uses"
+GenerateReportCtrl *--> ActivityRepository : "uses"
+
+GenerateReportCtrl --> Stage : "uses"
+GenerateReportCtrl --> Dev : "uses" 
+GenerateReportCtrl --> Project : "uses"
+GenerateReportCtrl --> Activity : "uses"
+
+GenerateReportCtrl ..> Stage : "<<local>>"
+GenerateReportCtrl ..> Activity : "<<local>>"
+GenerateReportCtrl ..> Project : "<<local>>"
+GenerateReportCtrl ..> Dev : "<<local>>"
+GenerateReportCtrl ..> Member : "<<local>>"
 
 @enduml
-
