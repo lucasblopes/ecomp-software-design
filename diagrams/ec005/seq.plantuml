@@ -1,0 +1,119 @@
+@startuml
+actor Adm_Fin
+participant "ctrl : RegisterInvoiceCtrl" as Ctrl
+participant "view : RegisterInvoiceView" as View
+participant "pr : ProjectRepository" as ProjRepo
+participant "ar : ActivityRepository" as ActRepo
+participant "p : Project" as Project
+participant "i : Invoice" as Invoice
+
+Adm_Fin -> Ctrl: registerInvoice()
+activate Ctrl
+
+Ctrl -> View: choice = showChoice()
+activate View
+View --> Ctrl: String
+
+alt choice == Project
+
+  View -> ProjRepo: getProjects()
+  activate ProjRepo
+  ProjRepo --> View: List<Project>
+  deactivate ProjRepo
+  deactivate View
+  
+  Ctrl -> View: selectProject() : String
+  activate View
+  
+  View --> Ctrl: String
+  deactivate View
+  
+  Ctrl -> ProjRepo: findProject(String) : Optional<Project>
+  activate ProjRepo
+  ProjRepo --> Ctrl: event = Optional<Project>
+  deactivate ProjRepo
+  
+  Ctrl -> Project: printProject()
+  activate Project
+  deactivate Project
+
+else choice == Activity
+
+  View -> ActRepo: getActivities()
+  activate ActRepo
+  ActRepo --> View: List<Activity>
+  deactivate ActRepo
+  deactivate View
+  
+  Ctrl -> View: selectActivity() : String
+  activate View
+  
+  View --> Ctrl: String
+  deactivate View
+  
+  Ctrl -> ActRepo: findActivity(String) : Optional<Activity>
+  activate ActRepo
+  ActRepo --> Ctrl: event = Optional<Activityt>
+  deactivate ActRepo
+  
+  Ctrl -> Activity: printActivity()
+  activate Activity
+  deactivate Activity
+end
+
+alt event encontrado
+
+    Ctrl -> View: getType() : String
+    activate View
+    View --> Ctrl: String
+    deactivate View
+
+    Ctrl -> View: getValue() : Integer
+    activate View
+    View --> Ctrl: Integer
+    deactivate View
+    
+    Ctrl -> View: getDate() : LocalDate
+    activate View
+    View --> Ctrl: LocalDate
+    deactivate View
+    
+    Ctrl -> Invoice: type(String)
+    activate Invoice
+
+    Ctrl -> Invoice: value(Integer)
+
+    Ctrl -> Invoice: date(LocalDate)
+    
+    Invoice --> Ctrl: Invoice
+    deactivate Invoice
+
+    alt Validação do Invoice falhou
+        Ctrl -> View: showError(String)
+        activate View
+        deactivate View
+    else else
+      alt event instanceof Project
+        Ctrl -> Project: addStage(Stage)
+        activate Project
+        deactivate Project
+      
+      else event instanceof Activity
+        Ctrl -> Activity: addStage(Stage)
+        activate Activity
+        deactivate Activity
+      end
+
+      Ctrl -> View: showSuccess(String)
+      activate View
+      deactivate View
+    end
+
+else else
+    Ctrl -> View: showError(String)
+    activate View
+    deactivate View
+end
+
+deactivate Ctrl
+@enduml
