@@ -25,4 +25,10 @@ public class ActivityRepository {
     public void removeActivity(Activity activity) {
         activities.remove(activity);
     }
+
+    public Optional<Activity> findActivity(String name) {
+    return activities.stream()
+            .filter(p -> p.getName().equalsIgnoreCase(name))
+            .findFirst();
+    }
 }

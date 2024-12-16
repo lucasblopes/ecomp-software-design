@@ -14,6 +14,11 @@ public class RegisterActivityView extends GenericView {
         System.out.println("=== Cadastrar Nova Atividade ===");
     }
 
+	public String getName() {
+		System.out.print("Nome: ");
+		return getInput();
+	}
+
 	public int getDurationMinutes() {
 		int durationMinutes;
 
@@ -65,7 +70,7 @@ public class RegisterActivityView extends GenericView {
 		return getInput();
 	}
 
-	public void showActivity(Activity activity) {
+	public void printActivity(Activity activity) {
 		System.out.println(activity.toString());
 		showContinue();
 	}
