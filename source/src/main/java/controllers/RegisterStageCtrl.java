@@ -16,15 +16,16 @@ public class RegisterStageCtrl {
    	}
 
     public void registerStage() {
-		view.showProjects(projectRepo);
+		if(view.showProjects(projectRepo) == false)
+            return;
 
         String selectedProject = view.selectProject();
 
         Optional<Project> foundProject = projectRepo.findProject(selectedProject);
         if (foundProject.isPresent()) {
-            foundProject.get().printProject();
+            System.out.println(foundProject.get().toString());
 		} else {
-           view.showError("Projeto não encontrado.");
+            view.showError("Projeto não encontrado.");
 		}
 
         String schedule = view.getSchedule();

@@ -23,12 +23,14 @@ public class RegisterActivityCtrl {
 		RegisterActivityView view = new RegisterActivityView();
 
 		view.showTitle();
+		String name = view.getName();
 		int durationMinutes = view.getDurationMinutes();
 		String location = view.getLocation();
 		List<String> participants = view.getParticipants(memberRepo);
 		String goal = view.getGoal();
 		String summary = view.getSummary();
 
+		activity.setName(name);
 		activity.setDurationMinutes(durationMinutes);
 		activity.setLocation(location);
 		activity.setParticipants(participants);
@@ -38,7 +40,7 @@ public class RegisterActivityCtrl {
 		activityRepo.addActivity(activity);
 
 		view.showTitle();
-		view.showActivity(activity);
+		view.printActivity(activity);
 		view.showSuccess("Atividade cadastrada com sucesso!");
 	}
 }

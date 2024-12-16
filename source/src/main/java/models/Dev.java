@@ -2,7 +2,6 @@ package models;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
 
 public class Dev {
 

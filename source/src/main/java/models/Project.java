@@ -14,10 +14,11 @@ public class Project {
     private String contractPDF;
     private List<Stage> stages;
     private List<Dev> devs;
+    private List<Invoice> invoices;
 
     // Construtor protected para que apenas ProjectBuilder possa instanciar
     protected Project(String title, String client, LocalDate startDate, LocalDate deliveryDeadline,
-                      String description, String contractPDF, List<Stage> stages, List<Dev> devs) {
+                      String description, String contractPDF, List<Stage> stages, List<Dev> devs, List<Invoice> invoices) {
         this.title = title;
         this.client = client;
         this.startDate = startDate;
@@ -26,6 +27,7 @@ public class Project {
         this.contractPDF = contractPDF;
         this.stages = stages == null ? new ArrayList<>() : stages; // Evita null
         this.devs = devs == null ? new ArrayList<>() : devs;
+        this.invoices = invoices == null ? new ArrayList<>() : invoices;
     }
 
     // Getters (sem setters para garantir imutabilidade)
@@ -61,6 +63,8 @@ public class Project {
         return devs;
     }
 
+    public List<Invoice> getInvoices() { return invoices; }
+
     // Adiciona Stage ao projeto
     public void addStage(Stage stage) {
         if (this.stages == null) {
@@ -71,6 +75,13 @@ public class Project {
 
     public void addDev(Dev dev) {
         this.devs.add(dev);         
+    }
+
+    public void addInvoice(Invoice invoice) {
+        if (this.invoices == null) {
+            this.invoices = new ArrayList<>();
+        }
+        this.invoices.add(invoice);
     }
 
     // Método de validação dos campos com feedback detalhado
@@ -98,26 +109,35 @@ public class Project {
         return erros;
     }
 
-    // Método para mostrar o projeto
-    public void printProject() {
-
-        System.out.println("Título: " + this.title);
-        System.out.println("Cliente: " + this.client);
-        System.out.println("Data de Início: " + this.startDate);
-        System.out.println("Prazo de Entrega: " + this.deliveryDeadline);
-        System.out.println("Descrição: " + this.description);
-
-        if (this.contractPDF == null)
-            System.out.println("Contrato não anexado");
-        else
-            System.out.println("Contrato: " + this.contractPDF);
-
-        System.out.println("\n=== Etapas ===");
-        for (Stage stage : this.stages) {
-            System.out.println("    Cronograma: " + stage.getSchedule() + " Status do Projeto: " + stage.getStatus());
-        }
+    @Override
+    public String toString() {
+        return "Título: '" + title + '\'' + "\n" +
+               "Cliente: '" + client + '\'' + "\n" +
+               "Data de Início: '" + startDate + '\'' + "\n" +
+               "Prazo de Entrega: '" + deliveryDeadline + '\'' + "\n" +
+               "Descrição: '" + description + '\'' + "\n" +
+               "Contrato: '" + (contractPDF == null ? "Contrato não anexado" : contractPDF) + '\'' + "\n" +
+               
+               (stages != null && !stages.isEmpty() ? 
+                   "=== Etapas ===\n" +
+                   stages.stream()
+                         .map(stage -> "    Cronograma: " + stage.getSchedule() + " Status do Projeto: " + stage.getStatus())
+                         .reduce("", (a, b) -> a + b + "\n") : "") +
+    
+               (invoices != null && !invoices.isEmpty() ? 
+                   "=== Notas Fiscais e Recibos ===\n" +
+                   invoices.stream()
+                           .map(invoice -> "    Data: " + invoice.getDate() + " Valor: " + invoice.getValue() + " Tipo: " + invoice.getType())
+                           .reduce("", (a, b) -> a + b + "\n") : "=== Notas Fiscais e Recibos === Nenhuma nota fiscal associada.") +
+    
+               (devs != null && !devs.isEmpty() ? 
+                   "=== Desenvolvedores ===\n" +
+                   devs.stream()
+                       .map(dev -> "    Nome: " + dev.getMember().getName())
+                       .reduce("", (a, b) -> a + b + "\n") : "=== Desenvolvedores === Nenhum desenvolvedor associado.");
     }
-
+    
+    
     // Método para acessar o construtor através do ProjectBuilder
     public static ProjectBuilder builder() {
         return new ProjectBuilder();
