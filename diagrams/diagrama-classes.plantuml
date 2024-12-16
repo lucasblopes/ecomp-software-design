@@ -1,0 +1,331 @@
+@startuml
+class Activity {
+    - int durationMinutes
+    - String location
+    - List<String> participants
+    - String goal
+    - String summary
+    + Activity()
+    + Activity(int, String, List<String>, String, String)
+}
+
+class Dev {
+    - String proj
+    - final Member member
+    - Map<String, Integer> issues
+    + Dev(Member, String)
+    + void addIssue(String, int)
+}
+
+class Member {
+    - String name
+    - String cpf
+    - String rg
+    - String email
+    - String phone
+    - String position
+    - String department
+    - String course
+    - LocalDate birthDate
+    + static MemberBuilder builder()
+}
+
+class Project {
+    - String title
+    - String client
+    - LocalDate startDate
+    - LocalDate deliveryDeadline
+    - String description
+    - String contractPDF
+    - List<Stage> stages
+    - List<Dev> devs
+    + static ProjectBuilder builder()
+}
+
+class Stage {
+    - String schedule
+    - String status
+    + static StageBuilder builder()
+}
+
+class ActivityRepository {
+    - List<Activity> activities
+    + void addActivity(Activity)
+}
+
+class DevRepository {
+    - List<Dev> devs
+    + void addDev(Dev)
+}
+
+class MemberRepository {
+    - List<Member> members
+    + void addMember(Member)
+}
+
+class ProjectRepository {
+    - List<Project> projects
+    + void addProject(Project)
+}
+
+class GenericView {
+    - Scanner scanner
+    + String getInput()
+}
+
+class DevView {
+    + void showManageScreen()
+}
+class EcompView {
+    + void showMenu()
+}
+
+class RegisterActivityView {
+    + void showTitle()
+}
+
+class GenerateReportView {
+    + void showTitle()
+}
+
+class RegisterInvoiceView {
+    + void showTitle()
+}
+
+class RegisterMemberView {
+    + void showMemberRegistrationScreen()
+    + String getName()
+    + String getCPF()
+}
+
+class RegisterProjectView {
+    + void showProjectRegistrationScreen()
+    + String getTitle()
+    + String getClient()
+}
+
+class RegisterStageView {
+    + void showProjects(ProjectRepository)
+    + String selectProject()
+}
+
+class DevCtrl {
+    - DevView view
+    - ProjectRepository projRepo
+    - MemberRepository memberRepo
+    - DevRepository devRepo
+    + void manage()
+    + void addDevToProject()
+}
+
+class EcompCtrl {
+    - EcompView view
+    - ProjectRepository projRepo
+    - MemberRepository memberRepo
+    - ActivityRepository activityRepo
+    - DevRepository devRepo
+    - RegisterProjectCtrl regProjCtrl
+    - RegisterStageCtrl stageCtrl
+    - RegisterActivityCtrl activityCtrl
+    - RegisterInvoiceCtrl invoiceCtrl
+    - RegisterMemberCtrl memberCtrl
+    - GenerateReportCtrl genRepCtrl
+    - DevCtrl devCtrl
+    + void start()
+}
+
+class GenerateReportCtrl {
+    + void generateReport()
+}
+
+class RegisterActivityCtrl {
+    - ActivityRepository activityRepo
+    - MemberRepository memberRepo
+    + void registerActivity()
+}
+
+class RegisterInvoiceCtrl {
+    + void registerInvoice()
+}
+
+class RegisterMemberCtrl {
+    - RegisterMemberView view
+    - MemberRepository memberRepo
+    + void registerMember()
+}
+
+class RegisterProjectCtrl {
+    - RegisterProjectView view
+    - ProjectRepository projectRepo
+    - DevCtrl devCtrl
+    + void registerProject()
+}
+
+class RegisterStageCtrl {
+    - RegisterStageView view
+    - ProjectRepository projectRepo
+    + void registerStage()
+}
+
+class Main {
+    + void main(String[] args)
+}
+
+class GenerateReportCtrl {
+    - ProjectRepository projectRepo
+    - ActivityRepository activityRepo
+    - GenerateReportView view
+    + void generateReport()
+    - String getProjectReportContent()
+    - String getFinancialReportContent()
+    - boolean saveReportToFile(String content, String filePath)
+}
+
+class RegisterInvoiceCtrl {
+    - RegisterInvoiceView view
+    - ProjectRepository projectRepo
+    - ActivityRepository activityRepo
+    + void registerInvoice()
+}
+
+class GenerateReportView {
+    + void showTitle()
+    + String getReportType()
+    + String getReportDestination()
+    + void displayReport(String reportContent)
+    + void displayFileSaveResult(boolean success, String filePath)
+    + void displayNotImplementedMessage()
+}
+
+class RegisterInvoiceView {
+    + String showChoice()
+    + boolean showProjects(ProjectRepository)
+    + boolean showActivities(ActivityRepository)
+    + String selectProject()
+    + String selectActivity()
+    + LocalDate getDate()
+    + String getType()
+    + Integer getValue()
+    + void showTitle()
+}
+
+class Invoice {
+    - LocalDate date
+    - Integer value
+    - String type
+    + Invoice(LocalDate, Integer, String)
+    + LocalDate getDate()
+    + Integer getValue()
+    + String getType()
+    + void setDate(LocalDate)
+    + void setValue(Integer)
+    + void setType(String)
+    + List<String> validateFields()
+}
+
+class DateUtil {
+    + static LocalDate parseDate(String dateString)
+}
+
+class PathUtil {
+    + static String getLastPartOfPath(String fullPath)
+}
+
+' Existing Relationships
+Main --> EcompCtrl : "uses"
+Main ..> EcompCtrl : <<local>>
+
+RegisterInvoiceCtrl ..> RegisterInvoiceView : <<local>>
+RegisterInvoiceCtrl ..> ProjectRepository : <<parâmetro>>
+RegisterInvoiceCtrl ..> ActivityRepository : <<parâmetro>>
+
+GenerateReportCtrl ..> GenerateReportView : <<local>>
+
+RegisterInvoiceView ..> ProjectRepository : <<parâmetro>>
+RegisterInvoiceView ..> ActivityRepository : <<parâmetro>>
+RegisterInvoiceView ..> DateUtil : <<local>>
+
+Invoice ..> DateUtil : <<local>>
+
+Project "1" *--> "0..*" Stage : "contains"
+Project "1" *--> "0..*" Dev : "contains"
+
+ActivityRepository "1" *--> "1..*" Activity : "manages"
+DevRepository "1" *--> "1..*" Dev : "manages"
+MemberRepository "1" *--> "1..*" Member : "manages"
+ProjectRepository "1" *--> "1..*" Project : "manages"
+
+GenericView <|-- DevView : "extends"
+GenericView <|-- EcompView : "extends"
+GenericView <|-- RegisterActivityView : "extends"
+GenericView <|-- GenerateReportView : "extends"
+GenericView <|-- RegisterInvoiceView : "extends"
+GenericView <|-- RegisterMemberView : "extends"
+GenericView <|-- RegisterProjectView : "extends"
+GenericView <|-- RegisterStageView : "extends"
+
+RegisterProjectView --> DateUtil : "uses"
+RegisterProjectView --> PathUtil : "uses"
+
+EcompCtrl *--> RegisterProjectCtrl : "manages"
+EcompCtrl *--> RegisterStageCtrl : "manages"
+EcompCtrl *--> RegisterActivityCtrl : "manages"
+EcompCtrl *--> RegisterInvoiceCtrl : "manages"
+EcompCtrl *--> RegisterMemberCtrl : "manages"
+EcompCtrl *--> GenerateReportCtrl : "manages"
+EcompCtrl *--> DevCtrl : "manages"
+EcompCtrl *--> EcompView : "uses"
+
+DevCtrl *--> DevRepository : "uses"
+DevCtrl *--> ProjectRepository : "uses"
+DevCtrl *--> MemberRepository : "uses"mv 
+DevCtrl *--> DevView : "uses"
+
+RegisterActivityCtrl *--> ActivityRepository : "uses"
+RegisterActivityCtrl *--> MemberRepository : "uses"
+RegisterActivityCtrl *--> RegisterActivityView : "uses"
+
+RegisterMemberCtrl *--> MemberRepository : "uses"
+
+RegisterProjectCtrl *--> ProjectRepository : "uses"
+RegisterProjectCtrl *--> DevCtrl : "uses"
+
+RegisterStageCtrl *--> ProjectRepository : "uses"
+
+Project "1" *--> "0..*" Stage : "contains"
+Project "1" *--> "0..*" Dev : "contains"
+
+DevCtrl ..> Project : "<<local>>\n<<parâmetro>>"
+DevCtrl ..> Member : "<<local>>"
+
+RegisterProjectCtrl ..> Project : "<<local>>"
+RegisterProjectCtrl ..> Dev : "<<local>>"
+
+RegisterStageCtrl ..> Project : "<<local>>"
+RegisterStageCtrl ..> Stage : "<<local>>"
+
+RegisterActivityCtrl ..> Activity : "<<local>>"
+RegisterActivityCtrl ..> Member: "<<local>>"
+
+RegisterMemberCtrl ..> Member : "<<local>>"
+MemberRepository ..> Member : "<<parâmetro>>"
+DevRepository ..> Dev : "<<parâmetro>>"
+ProjectRepository ..> Project : "<<parâmetro>>"
+ActivityRepository ..> Activity : "<<parâmetro>>"
+
+RegisterInvoiceCtrl *--> RegisterInvoiceView
+RegisterInvoiceCtrl *--> ProjectRepository
+RegisterInvoiceCtrl *--> ActivityRepository
+
+GenerateReportCtrl *--> ProjectRepo : "uses"
+GenerateReportCtrl *--> ActivityRepo : "uses"
+GenerateReportView *--> GenerateReportView : "uses"
+
+GenerateReprotView ..> State : "<<local>>"
+GenerateReprotView ..> Activity : "<<local>>"
+GenerateReprotView ..> Project : "<<local>>"
+GenerateReprotView ..> Dev : "<<local>>"
+GenerateReprotView ..> Member : "<<local>>"
+
+@enduml
+
