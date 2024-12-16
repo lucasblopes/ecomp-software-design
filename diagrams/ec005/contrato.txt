@@ -1,0 +1,21 @@
+Operação: registerInvoice()
+
+Referências Cruzadas: Caso de uso cadastrar nota fiscal
+
+Descrição: Registra uma nova nota fiscal, inserindo os dados relacionados a um projeto ou atividade e associando a nota fiscal ao item escolhido.
+
+Pré-condições:
+
+Instância ctrl de RegisterInvoiceCtrl existe.
+Instância view de RegisterInvoiceView existe.
+Instância projRepo de ProjectRepository ou actRepo de ActivityRepository existe.
+Instância proj de Project ou act de Activity foi selecionada.
+O tipo da nota fiscal foi determinado (por exemplo, "Projeto" ou "Atividade").
+Pós-condições:
+
+Instância i de Invoice foi criada com os dados fornecidos.
+A nota fiscal i foi associada ao item (projeto ou atividade) selecionado.
+Se o item for um Project, a nota fiscal foi adicionada ao projeto (proj.addInvoice(i)).
+Se o item for uma Activity, a nota fiscal foi adicionada à atividade (act.addInvoice(i)).
+Se a validação da nota fiscal for bem-sucedida, o sistema exibe uma tela de sucesso.
+Se a validação falhar, o sistema exibe uma tela de erro.

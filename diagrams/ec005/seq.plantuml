@@ -5,6 +5,7 @@ participant "view : RegisterInvoiceView" as View
 participant "pr : ProjectRepository" as ProjRepo
 participant "ar : ActivityRepository" as ActRepo
 participant "p : Project" as Project
+participant "a : Activity" as Activity
 participant "i : Invoice" as Invoice
 
 Adm_Fin -> Ctrl: registerInvoice()
@@ -13,18 +14,21 @@ activate Ctrl
 Ctrl -> View: choice = showChoice()
 activate View
 View --> Ctrl: String
+deactivate View
 
 alt choice == Project
-
+  
+  Ctrl -> View: showProjects(ProjRepo)
+  activate View
+  
   View -> ProjRepo: getProjects()
   activate ProjRepo
   ProjRepo --> View: List<Project>
   deactivate ProjRepo
   deactivate View
-  
+
   Ctrl -> View: selectProject() : String
   activate View
-  
   View --> Ctrl: String
   deactivate View
   
@@ -39,6 +43,9 @@ alt choice == Project
 
 else choice == Activity
 
+  Ctrl -> View: showActivities(ActRepo)
+  activate View
+  
   View -> ActRepo: getActivities()
   activate ActRepo
   ActRepo --> View: List<Activity>
@@ -63,28 +70,24 @@ end
 
 alt event encontrado
 
-    Ctrl -> View: getType() : String
+    Ctrl -> View: type = getType() : String
     activate View
     View --> Ctrl: String
     deactivate View
 
-    Ctrl -> View: getValue() : Integer
+    Ctrl -> View: value = getValue() : Integer
     activate View
     View --> Ctrl: Integer
     deactivate View
     
-    Ctrl -> View: getDate() : LocalDate
+    Ctrl -> View: date = getDate() : LocalDate
     activate View
     View --> Ctrl: LocalDate
     deactivate View
     
-    Ctrl -> Invoice: type(String)
+    Ctrl -> Invoice: <<create>> new Invoice(type, value, date)
     activate Invoice
 
-    Ctrl -> Invoice: value(Integer)
-
-    Ctrl -> Invoice: date(LocalDate)
-    
     Invoice --> Ctrl: Invoice
     deactivate Invoice
 
@@ -94,12 +97,12 @@ alt event encontrado
         deactivate View
     else else
       alt event instanceof Project
-        Ctrl -> Project: addStage(Stage)
+        Ctrl -> Project: addInvoice(Invoice)
         activate Project
         deactivate Project
       
       else event instanceof Activity
-        Ctrl -> Activity: addStage(Stage)
+        Ctrl -> Activity: addInvoice(Invoice)
         activate Activity
         deactivate Activity
       end
